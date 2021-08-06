@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bootstrap.mappers.TbCefEaf0100Mapper">
+
+	<!-- Instead of referencing Fully Qualified Class Names we can register
+		Aliases in mybatis-config.xml and use Alias names. <resultMap type='TbCefEaf0100'
+		id='TbCefEaf0100Result'> <id property='userId' column='user_id'/> <result
+		property='tapNo' column='TAP_NO'/> <result property='efOpSumupDt' column='EF_OP_SUMUP_DT'/>
+		<result property='efOpSft' column='EF_OP_SFT'/> <result property='efOpEmpno'
+		column='EF_OP_EMPNO'/> </resultMap> -->
+
+	<resultMap type="TbCefEaf0100" id="TbCefEaf0100Result">
+		<result property='tapNo' column='TAP_NO' />
+		<result property='efOpSumupDt' column='EF_OP_SUMUP_DT' />
+		<result property='efOpSft' column='EF_OP_SFT' />
+		<result property='efOpEmpno' column='EF_OP_EMPNO' />
+	</resultMap>
+
+	<select id='getAllTbCefEaf0100s' resultMap='TbCefEaf0100Result'>
+		SELECT
+CD_GROUP_ID,
+CD_GROUP_NM,
+CD_ID,
+CD_MEANING,
+LOGIN_ID,
+		FROM comm_info
+		where CREATION_TIMESTAMP  <![CDATA[ < ]]>	sysdate - 100
+	</select>
+
+
+	<select id='getTbCefEaf0100' resultMap='TbCefEaf0100Result'>
+		SELECT
+CD_GROUP_ID,
+CD_GROUP_NM,
+CD_ID,
+CD_MEANING,
+LOGIN_ID,
+		FROM comm_info
+		where TAP_NO =#{value}
+	</select>
+
+
+
+	<sql id="userColumns">
+CD_GROUP_ID,
+CD_GROUP_NM,
+CD_ID,
+CD_MEANING,
+LOGIN_ID,
+PRICE,
+EXT1,
+EXT2,
+EXT3,
+SORT_SEQ,
+CREATED_OBJECT_TYPE,
+CREATED_OBJECT_ID,
+CREATED_PROGRAM_ID,
+CREATION_TIMESTAMP,
+LAST_UPDATED_OBJECT_TYPE,
+LAST_UPDATED_OBJECT_ID,
+LAST_UPDATE_PROGRAM_ID,
+LAST_UPDATE_TIMESTAMP
+	</sql>
+
+
+	<select id='getTbCefEaf0100ByIdForMap' parameterType='String'
+		resultType='java.util.HashMap'>
+		SELECT
+		FROM comm_info
+		where CD_ID =#{value}
+	</select>
+
+
+	<select id='getTbCefEaf0100ByIdForMap2' parameterType='hashmap'
+		resultType='java.util.HashMap'>
+		SELECT
+		<include refid="userColumns"></include>
+		FROM comm_info
+		WHERE CD_ID in ( #{1} ,#{2} )
+	</select>
+
+
+	<insert id="insertTbCefEaf0100" parameterType="hashmap">
+		insert into comm_info (CD_GROUP_ID,CD_GROUP_NM,CD_ID,CD_MEANING,LOGIN_ID)
+		values (#{CD_GROUP_ID},#{CD_GROUP_NM},#{CD_ID},#{CD_MEANING},#{LOGIN_ID})
+	</insert>
+
+</mapper>

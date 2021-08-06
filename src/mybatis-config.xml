@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <properties resource='jdbc.properties' />
+    <settings>
+        <setting name="cacheEnabled" value="false" />
+        <setting name="useGeneratedKeys" value="ture" />
+        <setting name="lazyLoadingEnabled" value="true" />
+        <setting name="defaultStatementTimeout" value="3000" />
+        <setting name="logImpl" value="LOG4J" />  <!-- log4j log setting -->
+    </settings>
+
+    <typeAliases>
+        <typeAlias type='com.bootstrap.domain.TbCefEaf0100'  alias='TbCefEaf0100'></typeAlias>
+    </typeAliases>
+
+    <environments default='development'>
+        <environment id='development'>
+            <transactionManager type='JDBC' />
+            <dataSource type='POOLED'>
+                <property name='driver' value='${jdbc.driverClassName}' />
+                <property name='url' value='${jdbc.url}' />
+                <property name='username' value='${jdbc.username}' />
+                <property name='password' value='${jdbc.password}' />
+            </dataSource>
+        </environment>
+    </environments>
+
+    <mappers>
+        <!-- <mapper resource='com/tchart/test/TchartMybatis/mappers/TbCefEaf0100Mapper.xml'/> -->
+        <package name='com.bootstrap.mappers' />
+        <!-- 참조 https://mybatis.org/mybatis-3/configuration.html -->
+    </mappers>
+
+</configuration>
