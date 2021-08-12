@@ -1,0 +1,134 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<queryMap desc="">
+
+	 <list_sql id="list_sql" desc="예약정보조회" >
+		 <![CDATA[
+SELECT A.CD_ID ,A.CD_MEANING, A.EXT1
+, B.RESERVE_INFO_ID
+, B.USER_NAME
+, B.USER_TEL1
+, B.USER_EMAIL
+, B.ACCONT_NO
+, DATE_FORMAT(B.RESERVE_DATE, '%y/%m/%d') RESERVE_DATE
+, DATE_FORMAT(B.CREATION_TIMESTAMP, '%y/%m/%d %p %h:%i') CREATION_TIMESTAMP
+, B.MEMO
+, B.CAR_NUM
+, B.LOGIN_ID
+, B.RESERVE_STATE
+, (SELECT CD_MEANING FROM comm_info WHERE CD_GROUP_ID='RESERVE_STATE' AND CD_ID=B.RESERVE_STATE) AS RESERVE_STATE_NAME
+, B.ROOM_NUM
+, B.GROUP_KEY
+, FORMAT(B.TOTAL_PAY, 0) as TOTAL_PAY
+, B.PRICE_DESC
+
+ FROM comm_info A LEFT OUTER JOIN reserve_info B ON A.CD_ID =B.ROOM_NUM
+ AND B.RESERVE_DATE between ? and ?
+ AND B.LOGIN_ID=?
+WHERE A.CD_GROUP_ID='ROOM_NUM' AND A.LOGIN_ID=?
+		 ]]>
+	 </list_sql>
+
+	 <list_sql2 id="list_sql2" desc="미입금된 예약정보조회" >
+		 <![CDATA[
+SELECT
+  A.CD_ID ,A.CD_MEANING, A.EXT1
+, B.RESERVE_INFO_ID
+, B.USER_NAME
+, B.USER_TEL1
+, B.USER_EMAIL
+, B.ACCONT_NO
+, DATE_FORMAT(B.RESERVE_DATE, '%y/%m/%d') RESERVE_DATE
+, DATE_FORMAT(B.CREATION_TIMESTAMP, '%y/%m/%d %p %h:%i') CREATION_TIMESTAMP
+, B.MEMO
+, B.CAR_NUM
+, B.LOGIN_ID
+, B.RESERVE_STATE
+, (SELECT CD_MEANING FROM comm_info WHERE CD_GROUP_ID='RESERVE_STATE' AND CD_ID=B.RESERVE_STATE) AS RESERVE_STATE_NAME
+, B.ROOM_NUM
+, B.GROUP_KEY
+, FORMAT(B.TOTAL_PAY, 0) as TOTAL_PAY
+, B.PRICE_DESC
+
+ FROM
+ ( select CD_ID, CD_MEANING,EXT1 from comm_info where CD_GROUP_ID='ROOM_NUM' AND LOGIN_ID=? ) A
+ INNER JOIN
+ ( SELECT * FROM reserve_info FORCE INDEX (idx_reserve_info_RESERVE_DATE)
+    WHERE 1=1
+ AND RESERVE_DATE between DATE_ADD(NOW(), INTERVAL -10 DAY) and DATE_ADD(NOW(), INTERVAL 10 DAY)
+ AND LOGIN_ID=?
+ AND RESERVE_STATE='1'
+ and DATEDIFF( now(), CREATION_TIMESTAMP) between 2 and 3
+ ) B
+ ON A.CD_ID =B.ROOM_NUM
+		 ]]>
+	 </list_sql2>
+
+	 <update_sql id="update_sql" desc="어드민 예약 상태변경" >
+		 <![CDATA[
+			UPDATE reserve_info SET
+			 RESERVE_STATE=?
+			WHERE GROUP_KEY=? AND LOGIN_ID=?
+		 ]]>
+	 </update_sql>
+
+	 <delete_sql id="delete_sql" desc="어드민 예약 삭제" >
+		 <![CDATA[
+			delete from reserve_info
+			WHERE GROUP_KEY=? AND LOGIN_ID=?
+		 ]]>
+	 </delete_sql>
+
+	 <delete_tel_sql id="delete_tel_sql" desc="어드민 예약 삭제" >
+		 <![CDATA[
+delete from reserve_info
+			WHERE GROUP_KEY=? and USER_TEL1=? AND LOGIN_ID=?
+		 ]]>
+	 </delete_tel_sql>
+
+
+	 <insert_sql id="insert_sql" desc="어드민 예약 상태변경" >
+		 <![CDATA[
+INSERT INTO reserve_info
+(USER_NAME,
+USER_TEL1,
+USER_EMAIL,
+ACCONT_NO,
+RESERVE_DATE,
+ROOM_NUM,
+MEMO,
+CAR_NUM,
+LOGIN_ID,
+RESERVE_STATE,
+GROUP_KEY,
+CAR_ADD_CNT,
+PEOPLE_ADD_CNT,
+TOTAL_PAY,
+PRICE_DESC,
+CREATION_TIMESTAMP
+)
+VALUES
+(?,
+?,
+?,
+?,
+?,
+?,
+?,
+?,
+?,
+?,
+?,
+?,
+?,
+?,
+?,
+now()
+);
+
+		 ]]>
+	 </insert_sql>
+
+
+
+
+</queryMap>

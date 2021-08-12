@@ -1,0 +1,86 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<queryMap desc="usercreate.xml" >
+
+	 <list_sql id="list_sql" desc="공통정보조회" >
+		 <![CDATA[
+SELECT
+USERNAME
+,TEL1
+,LOGINID
+,LOGINPW
+,ACCESSPW
+,EMAIL
+,STATUS
+,CREATION_TIMESTAMP
+,LAST_UPDATE_TIMESTAMP
+ FROM fishfox.user_info where USERNAME like concat(?,'%')
+ORDER BY USERNAME
+		LIMIT 0, 50
+		 ]]>
+	 </list_sql>
+
+ <inser_user1 id="inser_user1" desc="사용자 추가" >
+	 <![CDATA[
+INSERT INTO `user_info` (`USERNAME`,`TEL1`,`LOGINID`,`LOGINPW`,`ACCESSPW`,`EMAIL`,`STATUS`,`IMG_UPLOAD`,`CREATION_TIMESTAMP`)
+VALUES (?,?,?,?,?,?,1,'Y',now());
+
+	 ]]>
+ </inser_user1>
+
+ <inser_user2 id="inser_user2" desc="사용자 공통코드 추가" >
+	 <![CDATA[
+INSERT INTO `comm_info`
+(`CD_GROUP_ID`,
+`CD_GROUP_NM`,
+`CD_ID`,
+`CD_MEANING`,
+`LOGIN_ID`,
+`PRICE`,
+`EXT1`,
+`EXT2`,
+`EXT3`,
+`SORT_SEQ`)
+select  `CD_GROUP_ID`,
+`CD_GROUP_NM`,
+`CD_ID`,
+`CD_MEANING`,
+?, -- 신규아이디
+`PRICE`,
+`EXT1`,
+`EXT2`,
+`EXT3`,
+`SORT_SEQ`
+from comm_info
+where ( LOGIN_ID='ADMIN' AND CD_GROUP_ID<>'FISH_TYPE' ) OR ( LOGIN_ID='ADMIN' AND CD_GROUP_ID = 'FISH_TYPE' AND CD_ID >= DATE_FORMAT(now(), '%Y%m01') )
+ORDER BY CD_GROUP_ID
+	 ]]>
+ </inser_user2>
+
+
+	 <update_sql id="update_sql" desc="사용자 수정" >
+		 <![CDATA[
+			UPDATE user_info SET
+USERNAME=?
+,TEL1=?
+,LOGINID=?
+,LOGINPW=?
+,ACCESSPW=?
+,EMAIL=?
+,STATUS=?
+			WHERE LOGINID=?
+		 ]]>
+	 </update_sql>
+
+	 <delete_user_sql id="delete_user_sql" desc="사용자 삭제" >
+		 <![CDATA[
+			delete from user_info WHERE LOGINID=?
+		 ]]>
+	 </delete_user_sql>
+
+	 <delete_user1_sql id="delete_user1_sql" desc="사용자 공통정보 삭제" >
+		 <![CDATA[
+			delete from comm_info WHERE LOGIN_ID=?
+		 ]]>
+	 </delete_user1_sql>
+
+</queryMap>

@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<queryMap desc="daymoney.xml">
+
+	 <list_sql id="list_sql" desc="공통정보조회" >
+		 <![CDATA[
+		SELECT CD_GROUP_ID, CD_GROUP_NM, CD_ID, CD_MEANING,PRICE,EXT1,EXT2, LOGIN_ID ,SORT_SEQ FROM comm_info
+		WHERE LOGIN_ID=? AND CD_GROUP_ID like 'DAY_MONEY'  AND CD_MEANING like concat(?,'%')
+		ORDER BY CD_GROUP_ID,SORT_SEQ,CD_ID
+		LIMIT 0, 50
+		 ]]>
+	 </list_sql>
+
+	 <update_sql id="update_sql" desc="공통정보 수정" >
+		 <![CDATA[
+			UPDATE comm_info SET
+			CD_MEANING=?
+			,PRICE=?
+			WHERE CD_GROUP_ID = 'DAY_MONEY'
+			AND CD_ID=?
+			AND LOGIN_ID=?
+		 ]]>
+	 </update_sql>
+
+</queryMap>

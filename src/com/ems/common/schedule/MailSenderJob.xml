@@ -1,0 +1,53 @@
+﻿<?xml version="1.0" encoding="UTF-8"?> 
+<queryMap desc=""> 
+
+	 <list_sql id="list_sql" desc="예약정보조회" >
+		 <![CDATA[ 
+SELECT max(USER_NAME) as USER_NAME , max(USER_TEL1) as USER_TEL1, substr(GROUP_KEY,1,17) PROID ,  substr(GROUP_KEY,18) DECK  ,count(GROUP_KEY) cnt 
+FROM reserve_info a where a.RESERVE_STATE='1' 
+and RESERVE_DATE between DATE_ADD(NOW(), INTERVAL -10 DAY) and DATE_ADD(NOW(), INTERVAL 10 DAY)
+and DATEDIFF( now(), LAST_UPDATE_TIMESTAMP) between 2 and 3 
+and LOGIN_ID=? group by GROUP_KEY
+		 ]]> 
+	 </list_sql>
+	 
+
+	 
+	 	 <delete_sql id="delete_sql" desc="예약정보삭제" >
+		 <![CDATA[ 
+delete
+FROM reserve_info 
+where RESERVE_STATE='1' 
+and RESERVE_DATE between DATE_ADD(NOW(), INTERVAL -10 DAY) and DATE_ADD(NOW(), INTERVAL 10 DAY)
+and DATEDIFF( now(), LAST_UPDATE_TIMESTAMP) between 2 and 3 
+and LOGIN_ID=?
+		 ]]> 
+	 </delete_sql>
+	 
+	 <list_sql2 id="list_sql2" desc="예약정보조회_한달지난대상" >
+		 <![CDATA[ 
+SELECT /* list_sql2 예약일이 40일 지난 대상  */
+USER_NAME
+,USER_TEL1
+,USER_EMAIL
+,ROOM_NUM
+,RESERVE_DATE, DATE_ADD(RESERVE_DATE, INTERVAL +40 DAY) RESERVE_DATE_ADD4,now()  FROM reserve_info
+where DATE_ADD(RESERVE_DATE, INTERVAL +40 DAY)<=now()
+order by RESERVE_DATE desc
+		 ]]> 
+	 </list_sql2>
+	 	 
+	 	 	 
+	<delete_sql2 id="delete_sql2" desc="예약정보삭제_한달지난정보삭제" >
+		 <![CDATA[ 
+delete FROM reserve_info
+where 1=1
+AND DATE_ADD(RESERVE_DATE, INTERVAL  (SELECT CD_ID FROM comm_info WHERE CD_GROUP_ID='DELETE_DAY' AND LOGIN_ID=?) DAY)<=now()
+AND 'Y' =  (SELECT CD_MEANING FROM comm_info WHERE CD_GROUP_ID='DELETE_DAY' AND LOGIN_ID=?) 
+and LOGIN_ID=?
+		 ]]> 
+	 </delete_sql2>
+	 	 
+;	 
+	 
+</queryMap>

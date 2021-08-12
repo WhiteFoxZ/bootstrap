@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<queryMap desc="">
+
+	 <list_sql id="list_sql" desc="공통정보조회" >
+		 <![CDATA[
+		SELECT CD_GROUP_ID, CD_GROUP_NM, CD_ID, CD_MEANING,PRICE,EXT1,EXT2, LOGIN_ID ,SORT_SEQ ,DATE_FORMAT( STR_TO_DATE(CD_ID, '%Y%m%d') ,'%m.%d') FISH_DAY
+		FROM comm_info
+		WHERE LOGIN_ID=? AND CD_GROUP_ID like 'FISH_TYPE'  AND SUBSTR(CD_MEANING,1,6) = ifnull(?, date_format(now(), '%Y%m')  )
+		ORDER BY CD_GROUP_ID,SORT_SEQ,CD_ID
+		LIMIT 0, 50
+		 ]]>
+	 </list_sql>
+
+	 <update_sql id="update_sql" desc="공통정보 수정" >
+		 <![CDATA[
+			UPDATE comm_info SET
+			 EXT1=?
+			,EXT2=?
+			WHERE CD_GROUP_ID='FISH_TYPE'
+			AND CD_ID=?
+			AND LOGIN_ID=?
+		 ]]>
+	 </update_sql>
+
+</queryMap>
