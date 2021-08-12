@@ -188,6 +188,16 @@ function year_onchange()
 
 <style>
 
+@font-face{
+ font-family:'Youth';
+ font-style:normal;
+ font-weight:400;
+ src:url('//cdn.jsdelivr.net/korean-webfonts/1/orgs/othrs/kywa/Youth/Youth.woff2') format('woff2'),
+     url('//cdn.jsdelivr.net/korean-webfonts/1/orgs/othrs/kywa/Youth/Youth.woff') format('woff');
+}
+
+body {font-family:'Youth';}
+
 .card-body {
   flex: 1 1 auto;
 }
@@ -195,13 +205,19 @@ function year_onchange()
 tbody.tr, td {  height:90px; align:center; text-align: center; }
 
 
-div.Box {position:relative; width:100%; height:100%;;}
+div.Box {position:relative; width:100%; height:100%;}
 div.head {float:left; width:100%; height:30%; font-size: 15px;color: red; margin-top: 0px;}
 div.body {clear:left; float:left; width:100%; height:45%; font-size: 20px;  }
 div.foot {position:absolute; clear:left; float:left; width:100%; height:25%; ; bottom:0px; font-size: 15px;color: black;}
 
 div.body2 {clear:left; float:left; width:100px; height:100px; font-size: 18px; display: flex; align-items: center; }
 
+
+.dataTable-table > thead > tr > th {
+  vertical-align: bottom;
+  text-align: center;
+  border-bottom: none;
+}
 
 
 /*
