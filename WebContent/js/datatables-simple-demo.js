@@ -16,11 +16,7 @@ window.addEventListener('DOMContentLoaded', event => {
     }
 
 
-//    $('#datatablesSimple').DataTable( {
-//        "paging":   false,
-//        "ordering": false,
-//        "info":     false
-//    } );
-//
+
+
 
 });

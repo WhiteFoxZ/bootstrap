@@ -188,6 +188,10 @@ function year_onchange()
 
 <style>
 
+.card-body {
+  flex: 1 1 auto;
+}
+
 tbody.tr, td {  height:90px; align:center; text-align: center; }
 
 
@@ -223,7 +227,7 @@ div.body2 {clear:left; float:left; width:100px; height:100px; font-size: 18px; d
 
 </style>
     </head>
-    <body class="sb-nav-fixed">
+    <body class="sb-nav-fixed" onload ="window_onload()" >
         <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
             <!-- Navbar Brand-->
             <a class="navbar-brand ps-3" href="index.html">Start Bootstrap</a>
@@ -321,20 +325,24 @@ div.body2 {clear:left; float:left; width:100px; height:100px; font-size: 18px; d
             </div>
             <div id="layoutSidenav_content">
                 <main>
-                    <div class="container-fluid px-3">
-                        <h1 class="mt-4">Dashboard</h1>
-                        <ol class="breadcrumb mb-4">
-                            <li class="breadcrumb-item active">Dashboard</li>
-                        </ol>
+                    <div class="container-fluid px-2">
 
-                        <div class="card mb-4">
+
+
+                        <div class="card mt-1" >
                             <div class="card-header">
                                 <i class="fas fa-table me-1"></i>
-                                DataTable Example
+                                 <select id = "syear" name="syear" data-inline="true"  data-ajax="false" >
+
+			    </select >
+			    &nbsp;
+			     <select   id= "smonth" name="smonth" onchange= "month_onchange()" data-inline="true"  >
+
+			    </select >
                             </div>
 
 
-                            <div class="card-body">
+                            <div class="card-body2">
 
 
                             </div>
