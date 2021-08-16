@@ -1,0 +1,15 @@
+﻿<style type="text/css">
+@font-face {font-family: nanum; src:url(./images/NanumGothic.eot);}
+a:link {font-family: nanum;font-size: 10pt}
+a:visited {font-family: nanum;font-size: 10pt}
+a:hover {font-family: nanum;font-size: 10pt}
+a:acvite {font-family: nanum;font-size: 10pt}
+body,div,table,tr,td,p,span {font-family: nanum;font-size: 10pt}
+</style>
+
+
+
+@font-face {font-family:Nanum; src:url(images/NanumGothic.eot);}
+@font-face {font-family:NanumGothic; src:url(./images/NanumGothic.ttf);}
+body{font-family:nanum;}
+div{font-family:nanum;}

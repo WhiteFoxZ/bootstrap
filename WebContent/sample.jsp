@@ -124,7 +124,6 @@
 
 <style>
 
-//청소년체
 @font-face{
  font-family:'Youth';
  font-style:normal;
@@ -133,27 +132,18 @@
      url('//cdn.jsdelivr.net/korean-webfonts/1/orgs/othrs/kywa/Youth/Youth.woff') format('woff');
 }
 
-//네이버나눔체
-@font-face{
- font-family:'nanum';
- font-style:normal;
- font-weight:400;
- src:url('./font/NanumFont_EOT_ALL/NanumGothic.eot') format('nanum');
-}
-
-
-body {font-family:'Youth'; }
+body {font-family:'Youth';}
 
 .card-body {
   flex: 1 1 auto;
 }
 
-tbody.tr, td {  height:90px; align:center; text-align: center; font-family:'nanum';}
+tbody.tr, td {  height:90px; align:center; text-align: center; }
 
 
 div.Box {position:relative; width:100%; height:100%;}
-div.head {float:left; width:100%; height:35%; font-size: 15px;color: red; margin-top: 0px;}
-div.body {clear:left; float:left; width:100%; height:40%; font-size: 15px;  }
+div.head {float:left; width:100%; height:30%; font-size: 15px;color: red; margin-top: 0px;}
+div.body {clear:left; float:left; width:100%; height:45%; font-size: 20px;  }
 div.foot {position:absolute; clear:left; float:left; width:100%; height:25%; ; bottom:0px; font-size: 15px;color: black;}
 
 div.body2 {clear:left; float:left; width:100px; height:100px; font-size: 18px; display: flex; align-items: center; }
@@ -164,14 +154,6 @@ div.body2 {clear:left; float:left; width:100px; height:100px; font-size: 18px; d
   text-align: center;
   border-bottom: none;
 }
-
-.dataTable-table > tbody > tr > td,
-.dataTable-table > tbody > tr > th,
-.dataTable-table > thead > tr > td,
-.dataTable-table > thead > tr > th {
-  padding: 0.2rem 0.1rem;
-}
-
 
 
 /*
@@ -197,7 +179,10 @@ div.body2 {clear:left; float:left; width:100px; height:100px; font-size: 18px; d
 
 </style>
 
-<%@ include file="include_script.jsp" %>
+<script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+<script src="js/scripts.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
 
 <script type="text/javascript">
 
@@ -541,9 +526,10 @@ function year_onchange()
 
                 </main>
                <%@ include file="include_footer.jsp" %>
-
             </div>
         </div>
+
+
 
     </body>
 </html>

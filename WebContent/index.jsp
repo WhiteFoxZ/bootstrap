@@ -21,7 +21,7 @@
 
 int sessionHashCode = session.getId().hashCode();
 
-String remoteIp = request.getRemoteAddr();
+String serverName = request.getServerName();
 
 String id = request.getParameter("id");
 String pw = request.getParameter("pw");
@@ -53,7 +53,13 @@ if(hash!=null && hash.length>0){
 
 	session.setAttribute("userinfo",hash[0]);		//일반유저세션관리
 	session.setAttribute("ADMIN","false");			//일반유저세션관리
-	session.setMaxInactiveInterval(60*10);	//10분
+
+	if(serverName.startsWith("localhost")){
+		session.setMaxInactiveInterval(60*100);	//10분
+	}else{
+		session.setMaxInactiveInterval(60*10);	//10분
+	}
+
 
 }
 
