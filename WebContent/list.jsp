@@ -213,6 +213,11 @@ function commonWork() {
 
                $('#datatablesSimple').tableMobilize();
 
+
+               $('.datepicker').datepicker();
+
+
+
            }
 
 
@@ -276,6 +281,13 @@ body {font-family:'Youth';}
 }
 
 
+.form-control {
+font-size: 0.7em;
+margin-top: 1px;
+}
+
+
+
 /*
 ##Device = Most of the Smartphones Mobiles (Portrait)
 ##Screen = B/w 320px to 479px
@@ -285,7 +297,11 @@ body {font-family:'Youth';}
 
 @media (min-width: 320px) and (max-width: 480px) {
 
-
+.btn-sm, .btn-group-sm > .btn {
+  padding: 0.15rem 0.15rem;
+  font-size: 0.75rem;
+  border-radius: 0.2rem;
+}
 
 }
 
@@ -395,7 +411,40 @@ body {font-family:'Youth';}
 
                        <div class="card mt-1 " >
                            <div class="card-header">
-                               <i class="fas fa-table me-1"></i>
+
+
+<form>
+
+  <div class="row">
+
+    <div class="col">
+    <input type="date" id="date2" class="form-control" style="max-width: 140px;">
+    </div>
+    <div class="col">
+      <input type="date" id="date2" class="form-control" style="max-width: 140px;">
+    </div>
+
+ <div class="col">
+      <input type="text" class="form-control" placeholder="First name" style="max-width: 140px;">
+    </div>
+
+    <div class="col"  >
+      <button type="button" class="btn btn-danger btn-sm" style="margin-top: 1px;" > <i class="fas fa-undo"></i> 조회</button>
+      <button type="button" class="btn btn-danger btn-sm" style="margin-top: 1px;" > <i class="fas fa-undo"></i> 입금</button>
+      <button type="button" class="btn btn-danger btn-sm" style="margin-top: 1px;" > <i class="fas fa-undo"></i> 삭제</button>
+
+    </div>
+
+  </div>
+
+  <div class="row">
+
+
+  </div>
+
+</form>
+
+
 
                            </div>
 
@@ -426,7 +475,7 @@ if(ADMIN!=null && ADMIN.equals("true")){ %>
             <th data-priority="<%=idx++ %>">금액</th>
             <th data-priority="<%=idx++ %>">메모</th>
             <th data-priority="<%=idx++ %>">상태</th>
-            <th data-priority="<%=idx++ %>" width="10%">버튼</th>
+            <th data-priority="<%=idx++ %>" width="20%">버튼</th>
 <%}else{ %>
             <th data-priority="<%=idx++ %>">No</th>
             <th data-priority="<%=idx++ %>">이름</th>
@@ -434,7 +483,7 @@ if(ADMIN!=null && ADMIN.equals("true")){ %>
             <th data-priority="<%=idx++ %>">기간</th>
             <th data-priority="<%=idx++ %>">상태</th>
             <!-- <th data-priority="<%=idx++ %>">PW</th> -->
-            <th data-priority="<%=idx++ %>" width="10%">버튼</th>
+            <th data-priority="<%=idx++ %>" width="20%">버튼</th>
 <%}%>
         </tr>
     </thead>
@@ -562,7 +611,14 @@ if(ADMIN!=null && ADMIN.equals("true")){ %>
             어종을 설정하세요.
             <%}else if(hash[i].getString("RESERVE_STATE").equals("")) {%>
 
-            <a href="room_made.jsp?room_num=<%=hash[i].getString("CD_ID")%>&rdate=<%=rdate %>" class="btn btn-primary btn-sm" style="width: 100%" ><i class="fas fa-edit"></i> 예약</a>
+            <a href="room_made.jsp?room_num=<%=hash[i].getString("CD_ID")%>&rdate=<%=rdate %>" class="btn btn-primary btn-sm" ><i class="fas fa-edit"></i> 예약</a>
+
+            <!-- <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#passwdPOP<%=i%>"> <i class="fas fa-undo"></i> 삭제</button>
+             -->
+
+            <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#passwdPOP<%=i%>"> <i class="fas fa-undo"></i> 확정</button>
+
+
 
             <%} %>
 
@@ -611,6 +667,7 @@ if(ADMIN!=null && ADMIN.equals("true")){ %>
             <%}else if(hash[i].getString("RESERVE_STATE").equals("1")) { %>
 
             <button type="button" class="btn btn-danger btn-sm" style="width: 100%" data-bs-toggle="modal" data-bs-target="#passwdPOP<%=i%>"> <i class="fas fa-undo"></i> 취소</button>
+
 
 
 
