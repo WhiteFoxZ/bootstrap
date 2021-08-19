@@ -97,196 +97,139 @@ if(userinfo!=null){
 
 <!DOCTYPE html>
 <html lang="en">
-   <head>
-   <title><%=USERNAME %>예약리스트</title>
-       <meta charset="utf-8" />
-       <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-       <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-       <meta name="description" content="" />
-       <meta name="author" content="" />
-       <title>Dashboard - SB Admin</title>
+  <head>
+  <title><%=USERNAME %>예약리스트</title>
+      <meta charset="utf-8" />
+      <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+      <meta name="description" content="" />
+      <meta name="author" content="" />
+      <title>Dashboard - SB Admin</title>
 
-       	<link href="css/styles.css" rel="stylesheet" />
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" crossorigin="anonymous"></script>
+          <link href="css/styles.css" rel="stylesheet" />
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" crossorigin="anonymous"></script>
 
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
-        <script src="js/scripts.js"></script>
-
-
-
-		<!-- tableMobilize-->
-       <link href="demo/css/theme-default.min.css" rel="stylesheet" />
-       <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
-	   <script src="demo/js/jquery.tableMobilize.min.js"></script>
+       <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+       <script src="js/scripts.js"></script>
 
 
 
-<link type="text/css" href="./jquery/css/ui.all.css" rel="stylesheet" />
-<script src="https://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+        <!-- tableMobilize-->
+      <link href="demo/css/theme-default.min.css" rel="stylesheet" />
+      <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+       <script src="demo/js/jquery.tableMobilize.min.js"></script>
 
-<script type="text/javascript">
-$(function() {
+      <SCRIPT >
 
-    $.datepicker.setDefaults({
-        monthNames: ['년 1월','년 2월','년 3월','년 4월','년 5월','년 6월','년 7월','년 8월','년 9월','년 10월','년 11월','년 12월'],
-        dayNamesMin: ['일', '월', '화', '수', '목', '금', '토'],
-        showMonthAfterYear:true,
-        dateFormat: 'yy-mm-dd',
-        showOn: 'both',
-        buttonImage: './jquery/ic_03.gif',
-        buttonImageOnly: true
+          function setEvent(event){
 
-    });
-    $("#P_SDATE").datepicker({
-        buttonText: '시작일',
-        showButtonPanel:true
+              document.frmMain.event.value=event;
+              document.frmMain.submit();
+
+          }
+
+          function init(){
+
+              <%
+              String msg = request.getAttribute("msg")!=null?request.getAttribute("msg").toString():null;
+
+              if(msg!=null && msg.length()>0){
+              %>
+
+              var msgText="<%=msg%>";
+              var textVisible="true";
+              var textonly="true";
+              var theme="a";
+              var html="";
+
+              $.mobile.loading( "show", {
+                  text: msgText,
+                  textVisible: textVisible,
+                  theme: theme,
+                  textonly: textonly,
+                  html: html
+              });
 
 
-    });
-    $("#P_EDATE").datepicker({
-        buttonText: '종료일',
-        showButtonPanel:true
-    });
-});
+              var timer = setTimeout(hideMsg, 1000);
 
-function commonWork() {
-    var stdt = document.getElementById("P_SDATE");
-    var endt = document.getElementById("P_EDATE");
+              <%}%>
 
-    if(endt.value != '' && stdt.value > endt.value) {
-        alert("종료일이 시작일보다 빠릅니다.\n\n다시 입력해 주십시오.");
-        stdt.value = "";
-        endt.value = "";
-        stdt.focus();
-    }
-}
-</script>
-<style type="text/css">
-    .ui-datepicker-trigger {
-        vertical-align: middle;
-        cursor: pointer;
-        border-width:1px; background-color:#E9F3FE; border-color:#404040;font:12px;text-align: left; padding-left:2px;
+              $('#datatablesSimple').tableMobilize();
 
-    }
-
-</style>
-
-<!-- 달력관련끝 -->
+          }
 
 
 
-       <SCRIPT >
+          function hideMsg(){
+              $.mobile.loading( "hide" );
+          }
 
-           function setEvent(event){
+          function cancel(pk,idx){
 
-               document.frmMain.event.value=event;
-               document.frmMain.submit();
+              var pw = $("#PASSWD"+idx).val();
 
-           }
+              if(pw==""){
 
-           function init(){
+                  alert('취소시 PW에 전화번호를 넣어주세요.');
+                  return false;
 
-               <%
-               String msg = request.getAttribute("msg")!=null?request.getAttribute("msg").toString():null;
+              }
 
-               if(msg!=null && msg.length()>0){
-               %>
+              //alert('취소합니다.');
 
-               var msgText="<%=msg%>";
-               var textVisible="true";
-               var textonly="true";
-               var theme="a";
-               var html="";
-
-               $.mobile.loading( "show", {
-                   text: msgText,
-                   textVisible: textVisible,
-                   theme: theme,
-                   textonly: textonly,
-                   html: html
-               });
+              document.frmMain.pk_key.value=pk;
+              document.frmMain.pk_pw.value=pw;
 
 
-               var timer = setTimeout(hideMsg, 1000);
+              setEvent('deletePK');
+              return false;
 
-               <%}%>
-
-               $('#datatablesSimple').tableMobilize();
-
-
-               $('.datepicker').datepicker();
+          }
 
 
-
-           }
-
-
-
-           function hideMsg(){
-               $.mobile.loading( "hide" );
-           }
-
-           function cancel(pk,idx){
-
-               var pw = $("#PASSWD"+idx).val();
-
-               if(pw==""){
-
-                   alert('취소시 PW에 전화번호를 넣어주세요.');
-                   return false;
-
-               }
-
-               //alert('취소합니다.');
-
-               document.frmMain.pk_key.value=pk;
-               document.frmMain.pk_pw.value=pw;
-
-
-               setEvent('deletePK');
-               return false;
-
-           }
-
-
-       </script>
+      </script>
 
 
 
 <style>
 
 @font-face{
- font-family:'Youth';
- font-style:normal;
- font-weight:400;
- src:url('//cdn.jsdelivr.net/korean-webfonts/1/orgs/othrs/kywa/Youth/Youth.woff2') format('woff2'),
-     url('//cdn.jsdelivr.net/korean-webfonts/1/orgs/othrs/kywa/Youth/Youth.woff') format('woff');
+font-family:'Youth';
+font-style:normal;
+font-weight:400;
+src:url('//cdn.jsdelivr.net/korean-webfonts/1/orgs/othrs/kywa/Youth/Youth.woff2') format('woff2'),
+    url('//cdn.jsdelivr.net/korean-webfonts/1/orgs/othrs/kywa/Youth/Youth.woff') format('woff');
 }
 
 body {font-family:'Youth';}
 
 .card-body {
- flex: 1 1 auto;
+flex: 1 1 auto;
 }
 
 
 
 
 .input-sm {
-    height: 25px;
-    padding: 1px 10px;
-    font-size: 12px;
-    line-height: 1.5;
-    border-radius: 3px;
+   height: 25px;
+   padding: 1px 10px;
+   font-size: 12px;
+   line-height: 1.5;
+   border-radius: 3px;
 }
-
 
 .form-control {
 font-size: 0.7em;
 margin-top: 1px;
 }
 
-
+/*
+.row > *{
+border: 1px;
+border:1px solid blue;
+}
+*/
 
 /*
 ##Device = Most of the Smartphones Mobiles (Portrait)
@@ -297,437 +240,406 @@ margin-top: 1px;
 
 @media (min-width: 320px) and (max-width: 480px) {
 
+
 .btn-sm, .btn-group-sm > .btn {
-  padding: 0.15rem 0.15rem;
-  font-size: 0.75rem;
-  border-radius: 0.2rem;
+ padding: 0.15rem 0.15rem;
+ font-size: 0.75rem;
+ border-radius: 0.2rem;
 }
 
 }
+
+
+       #ask-icon {
+           border: none;
+           width: 100px;
+           height: 100px;
+           position: fixed;
+           bottom: 30px;
+           right: 30px;
+           border-radius: 30px;
+           background: cornflowerblue;
+           line-height: 100px;
+           text-align: center;
+           color: white;
+           font-weight: bold;
+       }
+
 
 </style>
-   </head>
-   <body class="sb-nav-fixed" onload ="init()" >
-       <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
-           <!-- Navbar Brand-->
-           <a class="navbar-brand ps-3" href="index.html">Start Bootstrap</a>
-           <!-- Sidebar Toggle-->
-           <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>
-           <!-- Navbar Search-->
-           <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
-               <div class="input-group">
-                   <input class="form-control" type="text" placeholder="Search for..." aria-label="Search for..." aria-describedby="btnNavbarSearch" />
-                   <button class="btn btn-primary" id="btnNavbarSearch" type="button"><i class="fas fa-search"></i></button>
-               </div>
-           </form>
-           <!-- Navbar-->
-           <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
-               <li class="nav-item dropdown">
-                   <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
-                   <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                       <li><a class="dropdown-item" href="#!">Settings</a></li>
-                       <li><a class="dropdown-item" href="#!">Activity Log</a></li>
-                       <li><hr class="dropdown-divider" /></li>
-                       <li><a class="dropdown-item" href="#!">Logout</a></li>
-                   </ul>
-               </li>
-           </ul>
-       </nav>
-       <div id="layoutSidenav">
-           <div id="layoutSidenav_nav">
-               <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
-                   <div class="sb-sidenav-menu">
-                       <div class="nav">
-                           <div class="sb-sidenav-menu-heading">Core</div>
-                           <a class="nav-link" href="index.html">
-                               <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
-                               Dashboard
-                           </a>
-                           <div class="sb-sidenav-menu-heading">Interface</div>
-                           <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
-                               <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
-                               Layouts
-                               <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                           </a>
-                           <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
-                               <nav class="sb-sidenav-menu-nested nav">
-                                   <a class="nav-link" href="layout-static.html">Static Navigation</a>
-                                   <a class="nav-link" href="layout-sidenav-light.html">Light Sidenav</a>
-                               </nav>
-                           </div>
-                           <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages">
-                               <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
-                               Pages
-                               <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                           </a>
-                           <div class="collapse" id="collapsePages" aria-labelledby="headingTwo" data-bs-parent="#sidenavAccordion">
-                               <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">
-                                   <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#pagesCollapseAuth" aria-expanded="false" aria-controls="pagesCollapseAuth">
-                                       Authentication
-                                       <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                                   </a>
-                                   <div class="collapse" id="pagesCollapseAuth" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionPages">
-                                       <nav class="sb-sidenav-menu-nested nav">
-                                           <a class="nav-link" href="login.html">Login</a>
-                                           <a class="nav-link" href="register.html">Register</a>
-                                           <a class="nav-link" href="password.html">Forgot Password</a>
-                                       </nav>
-                                   </div>
-                                   <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#pagesCollapseError" aria-expanded="false" aria-controls="pagesCollapseError">
-                                       Error
-                                       <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                                   </a>
-                                   <div class="collapse" id="pagesCollapseError" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionPages">
-                                       <nav class="sb-sidenav-menu-nested nav">
-                                           <a class="nav-link" href="401.html">401 Page</a>
-                                           <a class="nav-link" href="404.html">404 Page</a>
-                                           <a class="nav-link" href="500.html">500 Page</a>
-                                       </nav>
-                                   </div>
-                               </nav>
-                           </div>
-                           <div class="sb-sidenav-menu-heading">Addons</div>
-                           <a class="nav-link" href="charts.html">
-                               <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
-                               Charts
-                           </a>
-                           <a class="nav-link" href="tables.html">
-                               <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
-                               Tables
-                           </a>
-                       </div>
-                   </div>
-                   <div class="sb-sidenav-footer">
-                       <div class="small">Logged in as:</div>
-                       Start Bootstrap
-                   </div>
-               </nav>
-           </div>
-           <div id="layoutSidenav_content">
-               <main>
-                   <div class="container-fluid px-2" >
+  </head>
+
+  <body class="sb-nav-fixed" onload ="init()" >
+
+	<%@ include file="include_sb-topnav.jsp" %>
+
+      <div id="layoutSidenav">
+
+          <%@ include file="include_layoutSidenav_nav.jsp" %>
+
+          <div id="layoutSidenav_content">
+              <main>
 
 
+<form name="frmMain" method="post" >
 
-                       <div class="card mt-1 " >
-                           <div class="card-header">
+<input type="hidden" name="event" value="" />
+<input type="hidden" name="pk_key" value="" />
+<input type="hidden" name="pk_pw" value="" />
+<input type="hidden" name="rdate" value="<%=rdate %>" />
+
+<div class="container-fluid px-2"  >
 
 
-<form>
+<div class="card mt-1" >
+                          <div class="card-header">
 
-  <div class="row">
+
+<%if(ADMIN!=null && ADMIN.equals("true")){ %>
+
+
+ <div class="row">
+
+   <div class="col">
+   <input type="date" id="P_SDATE" name="P_SDATE" value="<%=P_SDATE %>"   class="form-control"    onchange="commonWork()" style="max-width: 140px;">
+   </div>
+
+   <div class="col">
+     <input type="date" id="P_EDATE" name="P_EDATE" value="<%=P_EDATE %>"   class="form-control"    onchange="commonWork()" style="max-width: 140px;">
+   </div>
 
     <div class="col">
-    <input type="date" id="date2" class="form-control" style="max-width: 140px;">
+     <input type="text" id="P_NAME" name="P_NAME" value="<%=P_NAME %>"  class="form-control" style="max-width: 140px;" placeholder="이름" />
+   </div>
+
+   <div class="col"  >
+     <button type="button" class="btn btn-danger btn-sm" style="margin-top: 1px;" onclick="setEvent('find');"> <i class="fas fa-undo"></i> 조회</button>
+     <button type="button" class="btn btn-danger btn-sm" style="margin-top: 1px;" onclick="setEvent('modify');"> <i class="fas fa-undo"></i> 입금</button>
+     <button type="button" class="btn btn-danger btn-sm" style="margin-top: 1px;" onclick="setEvent('delete');"> <i class="fas fa-undo"></i> 삭제</button>
+   </div>
+
+ </div><!-- row end -->
+
+<%}else{//어드민이 아닐경우 %>
+
+     <div class="row">
+        <div class="col-md-6"><i class="fas fa-table me-1"></i><%=rdate %>&nbsp;<b style="color: red;">[<%=fishtype %>]</b>
+        </div>
+        <div class="col-md-6">
+        ★자리위치사진 :
+
+ <%for(int i=0; i<postion.length; i++){ %>
+
+<a href="<%=postion[i].getString("CD_MEANING") %>" target="_blank" /><%=postion[i].getString("EXT1")%></a>&nbsp;
+<%=i<postion.length-1?"|&nbsp;":""%>
+
+
+ <%} %>
+        </div>
     </div>
-    <div class="col">
-      <input type="date" id="date2" class="form-control" style="max-width: 140px;">
-    </div>
 
- <div class="col">
-      <input type="text" class="form-control" placeholder="First name" style="max-width: 140px;">
-    </div>
-
-    <div class="col"  >
-      <button type="button" class="btn btn-danger btn-sm" style="margin-top: 1px;" > <i class="fas fa-undo"></i> 조회</button>
-      <button type="button" class="btn btn-danger btn-sm" style="margin-top: 1px;" > <i class="fas fa-undo"></i> 입금</button>
-      <button type="button" class="btn btn-danger btn-sm" style="margin-top: 1px;" > <i class="fas fa-undo"></i> 삭제</button>
-
-    </div>
-
-  </div>
-
-  <div class="row">
+<%} %>
 
 
-  </div>
+                          </div>
+</div>
 
-</form>
+
+</div>
+
+
+                  <div class="container-fluid px-2" >
+
+
+                      <div class="card mt-1" >
+                          <div class="card-header">
 
 
 
-                           </div>
+                          </div><!-- card-header end -->
 
 
-                           <div class="card-body2">
+                          <div class="card-body2" style="margin-left: 10px;">
 
 
-                           </div>
-                       </div>
+                      </div><!-- card-body2 end -->
 
 
-                         <!-- 달력시작 class="ui very compact table"  -->
 
-                           <table  id="datatablesSimple"  class="tableMobilize table-striped" style="width: 100%">
+
+
+                        <!-- 달력시작 class="ui very compact table"  -->
+
+                          <table  id="datatablesSimple"  class="tableMobilize table-striped" style="width: 100%">
 
 <thead>
-        <tr >
+       <tr >
 <%
 int idx=1;
 if(ADMIN!=null && ADMIN.equals("true")){ %>
-            <th data-priority="<%=idx++ %>">▼</th>
-            <th data-priority="<%=idx++ %>">No</th>
-            <th data-priority="<%=idx++ %>">등록일</th>
-            <th data-priority="<%=idx++ %>">이름</th>
-            <th data-priority="<%=idx++ %>">전화</th>
-            <!-- <th data-priority="<%=idx++ %>">차량</th> -->
-            <th data-priority="<%=idx++ %>">기간</th>
-            <th data-priority="<%=idx++ %>">금액</th>
-            <th data-priority="<%=idx++ %>">메모</th>
-            <th data-priority="<%=idx++ %>">상태</th>
-            <th data-priority="<%=idx++ %>" width="20%">버튼</th>
+           <th data-priority="<%=idx++ %>">▼</th>
+           <th data-priority="<%=idx++ %>">No</th>
+           <th data-priority="<%=idx++ %>">등록일</th>
+           <th data-priority="<%=idx++ %>">이름</th>
+           <th data-priority="<%=idx++ %>">전화</th>
+           <!-- <th data-priority="<%=idx++ %>">차량</th> -->
+           <th data-priority="<%=idx++ %>">기간</th>
+           <th data-priority="<%=idx++ %>">금액</th>
+           <th data-priority="<%=idx++ %>">메모</th>
+           <th data-priority="<%=idx++ %>">상태</th>
+           <th data-priority="<%=idx++ %>" width="20%">버튼</th>
 <%}else{ %>
-            <th data-priority="<%=idx++ %>">No</th>
-            <th data-priority="<%=idx++ %>">이름</th>
-            <th data-priority="<%=idx++ %>">전화</th>
-            <th data-priority="<%=idx++ %>">기간</th>
-            <th data-priority="<%=idx++ %>">상태</th>
-            <!-- <th data-priority="<%=idx++ %>">PW</th> -->
-            <th data-priority="<%=idx++ %>" width="20%">버튼</th>
+           <th data-priority="<%=idx++ %>">No</th>
+           <th data-priority="<%=idx++ %>">이름</th>
+           <th data-priority="<%=idx++ %>">전화</th>
+           <th data-priority="<%=idx++ %>">기간</th>
+           <th data-priority="<%=idx++ %>">상태</th>
+           <!-- <th data-priority="<%=idx++ %>">PW</th> -->
+           <th data-priority="<%=idx++ %>" width="20%">버튼</th>
 <%}%>
-        </tr>
-    </thead>
+       </tr>
+   </thead>
 
-    <tbody >
-    <%
-    if(hash!=null){
+   <tbody >
+   <%
+   if(hash!=null){
 
-        String USER_TEL1="";
+       String USER_TEL1="";
 
-        for (int i = 0; i < hash.length && i<intMan ;  i++) {
+       for (int i = 0; i < hash.length && i<intMan ;  i++) {
 
-            if(hash[i].getString("USER_TEL1").length()>0){
-                USER_TEL1 = aes.decrypt( hash[i].getString("USER_TEL1") );
-            }else{
-                USER_TEL1="";
-            }
-    %>
+           if(hash[i].getString("USER_TEL1").length()>0){
+               USER_TEL1 = aes.decrypt( hash[i].getString("USER_TEL1") );
+           }else{
+               USER_TEL1="";
+           }
+   %>
 
-        <tr >
+       <tr >
 <% //어드민일경우
 if(ADMIN!=null && ADMIN.equals("true")){ %>
 
 
-            <td><input type="checkbox" id="chk" name="chk" value="<%=i%>" data-role="none"  >        </td>
-            <td><%=EmsNumberUtil.format(hash[i].getString("CD_ID"), "00")%><%=hash[i].getString("EXT1")%></td>
-            <td ><%=hash[i].getString("CREATION_TIMESTAMP")%></td>
+           <td><input type="checkbox" id="chk" name="chk" value="<%=i%>" data-role="none"  >        </td>
+           <td><%=EmsNumberUtil.format(hash[i].getString("CD_ID"), "00")%><%=hash[i].getString("EXT1")%></td>
+           <td ><%=hash[i].getString("CREATION_TIMESTAMP")%></td>
 
-            <td><%=hash[i].getString("USER_NAME")%></td>
-            <td><%=USER_TEL1%></td>
-             <!--
-            <td>
-                <%=hash[i].getString("CAR_NUM")%>
-            </td>
-             -->
+           <td><%=hash[i].getString("USER_NAME")%></td>
+           <td><%=USER_TEL1%></td>
+            <!--
+           <td>
+               <%=hash[i].getString("CAR_NUM")%>
+           </td>
+            -->
 
-            <td>
-            <%
-                    if(hash[i].getString("GROUP_KEY").length()>17){
-                        perid = hash[i].getString("GROUP_KEY").substring(0,17);
-                        out.println(perid.replaceAll(yyyy, ""));
-                    }
-            %>
-            <input type="hidden" id="PK_GROUP_KEY" name="PK_GROUP_KEY" value="<%=hash[i].getString("GROUP_KEY")%>" >
-            </td>
-            <td>
+           <td>
+           <%
+                   if(hash[i].getString("GROUP_KEY").length()>17){
+                       perid = hash[i].getString("GROUP_KEY").substring(0,17);
+                       out.println(perid.replaceAll(yyyy, ""));
+                   }
+           %>
+           <input type="hidden" id="PK_GROUP_KEY" name="PK_GROUP_KEY" value="<%=hash[i].getString("GROUP_KEY")%>" >
+           </td>
+           <td>
 
 
-    <%if(hash[i].getString("PRICE_DESC").length()>0){ %>
-     <a href="#POP_PRICE_DESC<%=i%>" data-bs-toggle="modal" data-bs-target="#POP_PRICE_DESC<%=i%>" >
-     <%=hash[i].getString("TOTAL_PAY")%>
-     </a>
-     <%}else{ %>
-     <%=hash[i].getString("TOTAL_PAY")%>
-     <%} %>
+   <%if(hash[i].getString("PRICE_DESC").length()>0){ %>
+    <a href="#POP_PRICE_DESC<%=i%>" data-bs-toggle="modal" data-bs-target="#POP_PRICE_DESC<%=i%>" >
+    <%=hash[i].getString("TOTAL_PAY")%>
+    </a>
+    <%}else{ %>
+    <%=hash[i].getString("TOTAL_PAY")%>
+    <%} %>
 
 
 <!-- Modal -->
 
 <div class="modal fade" id="POP_PRICE_DESC<%=i%>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">금액</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-          <div class="form-group form-group-xs">
-			  <div class="col-xs-12"><%=hash[i].getString("PRICE_DESC")%></div>
-		  </div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+ <div class="modal-dialog">
+   <div class="modal-content">
+     <div class="modal-header">
+       <h5 class="modal-title" id="exampleModalLabel">금액</h5>
+       <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+     </div>
+     <div class="modal-body">
+         <div class="form-group form-group-xs">
+              <div class="col-xs-12"><%=hash[i].getString("PRICE_DESC")%></div>
+          </div>
+     </div>
+     <div class="modal-footer">
+       <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
 
-      </div>
-    </div>
-  </div>
+     </div>
+   </div>
+ </div>
 </div>
 
 
-            </td>
+           </td>
 
-            <td class="">
-     <%
+           <td class="">
+    <%
 
-     if(hash[i].getString("MEMO").length()>0){
-     %>
+    if(hash[i].getString("MEMO").length()>0){
+    %>
 
-       <button type="button" class="btn btn-danger btn-sm" style="width: 100%" data-bs-toggle="modal" data-bs-target="#POP_MENO<%=i%>"> <i class="fas fa-undo"></i> 클릭</button>
+      <button type="button" class="btn btn-danger btn-sm" style="width: 100%" data-bs-toggle="modal" data-bs-target="#POP_MENO<%=i%>"> <i class="fas fa-undo"></i> 클릭</button>
 
 <!-- Modal -->
 
 <div class="modal fade" id="passwdPOP<%=i%>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-          <div class="form-group form-group-xs">
-			  <div class="col-xs-12"><pre class="pre_con"><%=hash[i].getString("MEMO")%></pre></div>
-		  </div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary btn-sm" onclick="cancel('<%=hash[i].getString("GROUP_KEY")%>','<%=i%>')" ><i class="fas fa-edit"></i>취소</button>
+ <div class="modal-dialog">
+   <div class="modal-content">
+     <div class="modal-header">
+       <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+       <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+     </div>
+     <div class="modal-body">
+         <div class="form-group form-group-xs">
+              <div class="col-xs-12"><pre class="pre_con"><%=hash[i].getString("MEMO")%></pre></div>
+          </div>
+     </div>
+     <div class="modal-footer">
+       <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+       <button type="button" class="btn btn-primary btn-sm" onclick="cancel('<%=hash[i].getString("GROUP_KEY")%>','<%=i%>')" ><i class="fas fa-edit"></i>취소</button>
 
-      </div>
-    </div>
-  </div>
+     </div>
+   </div>
+ </div>
 </div>
 
 
-     <%}else{%>
+    <%}else{%>
 
-     <%}%>
-            </td>
+    <%}%>
+           </td>
 
-            <td><%=hash[i].getString("RESERVE_STATE_NAME")%></td>
-            <th>
-            <%
+           <td><%=hash[i].getString("RESERVE_STATE_NAME")%></td>
+           <th>
+           <%
 
-            if(fishtype.equals("") ){%>
-            어종을 설정하세요.
-            <%}else if(hash[i].getString("RESERVE_STATE").equals("")) {%>
+           if(fishtype.equals("") ){%>
+           어종을 설정하세요.
+           <%}else if(hash[i].getString("RESERVE_STATE").equals("")) {%>
 
-            <a href="room_made.jsp?room_num=<%=hash[i].getString("CD_ID")%>&rdate=<%=rdate %>" class="btn btn-primary btn-sm" ><i class="fas fa-edit"></i> 예약</a>
-
-            <!-- <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#passwdPOP<%=i%>"> <i class="fas fa-undo"></i> 삭제</button>
-             -->
-
-            <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#passwdPOP<%=i%>"> <i class="fas fa-undo"></i> 확정</button>
+           <a href="room_made.jsp?room_num=<%=hash[i].getString("CD_ID")%>&rdate=<%=rdate %>" class="btn btn-primary btn-sm" style="width: 100%" ><i class="fas fa-edit"></i> 예약</a>
 
 
+           <%} %>
 
-            <%} %>
-
-            </th>
+           </th>
 <%}else{ %>
-            <!-- 일반유저 -->
-            <td><%=EmsNumberUtil.format(hash[i].getString("CD_ID"), "00") %><%=hash[i].getString("EXT1")%></td>
-            <td><%
-                    if(hash[i].getString("USER_NAME").length()>2){
-                        out.println("*"+hash[i].getString("USER_NAME").substring(1,2)+"*");
-                    }else if(hash[i].getString("USER_NAME").length()==2){
-                        out.println("*"+hash[i].getString("USER_NAME").substring(1));
-                    }
-                %>
-            </td>
-            <td>
-            <%
+           <!-- 일반유저 -->
+           <td><%=EmsNumberUtil.format(hash[i].getString("CD_ID"), "00") %><%=hash[i].getString("EXT1")%></td>
+           <td><%
+                   if(hash[i].getString("USER_NAME").length()>2){
+                       out.println("*"+hash[i].getString("USER_NAME").substring(1,2)+"*");
+                   }else if(hash[i].getString("USER_NAME").length()==2){
+                       out.println("*"+hash[i].getString("USER_NAME").substring(1));
+                   }
+               %>
+           </td>
+           <td>
+           <%
 
 
-            String tel[] =USER_TEL1.split("-") ;
+           String tel[] =USER_TEL1.split("-") ;
 
-            if(tel.length==3)
-                out.println(tel[0] +"-****-"+tel[2]);
-            else
-                out.println(!USER_TEL1.equals("")?aes.maskify(USER_TEL1):"");
+           if(tel.length==3)
+               out.println(tel[0] +"-****-"+tel[2]);
+           else
+               out.println(!USER_TEL1.equals("")?aes.maskify(USER_TEL1):"");
 
-            %>
-            </td>
-            <td>
-            <%
-                    if(hash[i].getString("GROUP_KEY").length()>17){
-                        perid = hash[i].getString("GROUP_KEY").substring(0,17);
-                        out.println(perid.replaceAll(yyyy, ""));
-                    }
-            %>
-            </td>
-            <td><%=hash[i].getString("RESERVE_STATE_NAME")%></td>
-            <!--
-            <td></td>
-            -->
+           %>
+           </td>
+           <td>
+           <%
+                   if(hash[i].getString("GROUP_KEY").length()>17){
+                       perid = hash[i].getString("GROUP_KEY").substring(0,17);
+                       out.println(perid.replaceAll(yyyy, ""));
+                   }
+           %>
+           </td>
+           <td><%=hash[i].getString("RESERVE_STATE_NAME")%></td>
+           <!--
+           <td></td>
+           -->
 
-            <th>
-            <% if(hash[i].getString("RESERVE_STATE").equals("") && !fishtype.equals("") ){%>
-            <a href="room_made.jsp?room_num=<%=hash[i].getString("CD_ID")%>&rdate=<%=rdate %>" class="btn btn-primary btn-sm" style="width: 100%" ><i class="fas fa-edit"></i> 예약</a>
+           <th>
+           <% if(hash[i].getString("RESERVE_STATE").equals("") && !fishtype.equals("") ){%>
+           <a href="room_made.jsp?room_num=<%=hash[i].getString("CD_ID")%>&rdate=<%=rdate %>" class="btn btn-primary btn-sm" style="width: 100%" ><i class="fas fa-edit"></i> 예약</a>
 
-            <%}else if(hash[i].getString("RESERVE_STATE").equals("1")) { %>
+           <%}else if(hash[i].getString("RESERVE_STATE").equals("1")) { %>
 
-            <button type="button" class="btn btn-danger btn-sm" style="width: 100%" data-bs-toggle="modal" data-bs-target="#passwdPOP<%=i%>"> <i class="fas fa-undo"></i> 취소</button>
-
+           <button type="button" class="btn btn-danger btn-sm" style="width: 100%" data-bs-toggle="modal" data-bs-target="#passwdPOP<%=i%>"> <i class="fas fa-undo"></i> 취소</button>
 
 
 
 <!-- Modal -->
 
 <div class="modal fade" id="passwdPOP<%=i%>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-          <div class="form-group form-group-xs">
-			  <div class="col-xs-12"><input type="text" class="form-control" id="PASSWD<%=i%>" name="PASSWD<%=i%>" placeholder="전화번호"></div>
-		  </div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary btn-sm" onclick="cancel('<%=hash[i].getString("GROUP_KEY")%>','<%=i%>')" ><i class="fas fa-edit"></i>취소</button>
+ <div class="modal-dialog">
+   <div class="modal-content">
+     <div class="modal-header">
+       <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+       <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+     </div>
+     <div class="modal-body">
+         <div class="form-group form-group-xs">
+              <div class="col-xs-12"><input type="text" class="form-control" id="PASSWD<%=i%>" name="PASSWD<%=i%>" placeholder="전화번호"></div>
+          </div>
+     </div>
+     <div class="modal-footer">
+       <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+       <button type="button" class="btn btn-primary btn-sm" onclick="cancel('<%=hash[i].getString("GROUP_KEY")%>','<%=i%>')" ><i class="fas fa-edit"></i>취소</button>
 
-      </div>
-    </div>
-  </div>
+     </div>
+   </div>
+ </div>
 </div>
 
-            <%}else{ %>
-            &nbsp;
-            <%} %>
-            </th>
+           <%}else{ %>
+           &nbsp;
+           <%} %>
+           </th>
 <%}%>
-        </tr>
-    <%    }    //end of for
+       </tr>
+   <%    }    //end of for
 
-    }%>
-    </tbody>
-
-
-                             </table>
+   }%>
+   </tbody>
 
 
-
-
-
-
-                   </div>
+                            </table>
 
 
 
 
 
 
-               </main>
-               <%@ include file="include_footer.jsp" %>
-           </div>
-       </div>
+                  </div>
 
 
 
-   </body>
+
+                    </div><!-- container-fluid px-2 end -->
+
+</form>
+
+              </main>
+
+
+
+              <%@ include file="include_footer.jsp" %>
+          </div>
+      </div>
+
+<div id="ask-icon">
+   문의하기
+</div>
+
+  </body>
 </html>
 
 
