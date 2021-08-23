@@ -231,6 +231,13 @@ border:1px solid blue;
 }
 */
 
+
+.my_btn {
+
+max-width: 140px;
+width: 100%;
+}
+
 /*
 ##Device = Most of the Smartphones Mobiles (Portrait)
 ##Screen = B/w 320px to 479px
@@ -246,24 +253,21 @@ border:1px solid blue;
  font-size: 0.75rem;
  border-radius: 0.2rem;
 }
+.my_btn {
+
+width: 100%;
+max-width: 100%;
+}
+
 
 }
 
 
-       #ask-icon {
-           border: none;
-           width: 100px;
-           height: 100px;
-           position: fixed;
-           bottom: 30px;
-           right: 30px;
-           border-radius: 30px;
-           background: cornflowerblue;
-           line-height: 100px;
-           text-align: center;
-           color: white;
-           font-weight: bold;
-       }
+ .msearch {
+     position: sticky;
+     top: 50px;
+     z-index: 1038;
+ }
 
 
 </style>
@@ -288,7 +292,7 @@ border:1px solid blue;
 <input type="hidden" name="pk_pw" value="" />
 <input type="hidden" name="rdate" value="<%=rdate %>" />
 
-<div class="container-fluid px-2"  >
+<div class="container-fluid px-2 msearch">
 
 
 <div class="card mt-1" >
@@ -302,11 +306,14 @@ border:1px solid blue;
 
    <div class="col">
    <input type="date" id="P_SDATE" name="P_SDATE" value="<%=P_SDATE %>"   class="form-control"    onchange="commonWork()" style="max-width: 140px;">
+
    </div>
 
    <div class="col">
-     <input type="date" id="P_EDATE" name="P_EDATE" value="<%=P_EDATE %>"   class="form-control"    onchange="commonWork()" style="max-width: 140px;">
+   <input type="date" id="P_EDATE" name="P_EDATE" value="<%=P_EDATE %>"   class="form-control"    onchange="commonWork()" style="max-width: 140px;">
    </div>
+
+
 
     <div class="col">
      <input type="text" id="P_NAME" name="P_NAME" value="<%=P_NAME %>"  class="form-control" style="max-width: 140px;" placeholder="이름" />
@@ -352,21 +359,6 @@ border:1px solid blue;
 
 
                       <div class="card mt-1" >
-                          <div class="card-header">
-
-
-
-                          </div><!-- card-header end -->
-
-
-                          <div class="card-body2" style="margin-left: 10px;">
-
-
-                      </div><!-- card-body2 end -->
-
-
-
-
 
                         <!-- 달력시작 class="ui very compact table"  -->
 
@@ -523,7 +515,7 @@ if(ADMIN!=null && ADMIN.equals("true")){ %>
            어종을 설정하세요.
            <%}else if(hash[i].getString("RESERVE_STATE").equals("")) {%>
 
-           <a href="room_made.jsp?room_num=<%=hash[i].getString("CD_ID")%>&rdate=<%=rdate %>" class="btn btn-primary btn-sm" style="width: 100%" ><i class="fas fa-edit"></i> 예약</a>
+           <a href="room_made.jsp?room_num=<%=hash[i].getString("CD_ID")%>&rdate=<%=rdate %>" class="btn btn-primary btn-sm my_btn" ><i class="fas fa-edit"></i> 예약</a>
 
 
            <%} %>
