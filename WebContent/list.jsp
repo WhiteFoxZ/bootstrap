@@ -123,12 +123,42 @@ if(userinfo!=null){
 
           function setEvent(event){
 
+        	  if(event="delete"){
+
+        		  //$('input:checkbox[id="chk"]').attr("checked", true);	테스트
+
+        		  $('input:checkbox[id="chk"]').each(function() {
+        	       if ($(this).is(":checked")) {
+
+        	    	   if($(this).data("pk-value")==null){
+
+        	    		   $(this).attr("checked", false);
+        	    		   console.log("pk-value=null" );
+
+        	    		}else{
+        	    			 $(this).attr("checked", false);
+        	    			console.log("pk-value=" + $(this).data("pk-value") );
+
+        	    		}
+
+
+        	       }
+        	    });
+
+        	    return false;
+
+
+        	  }
+
+
               document.frmMain.event.value=event;
               document.frmMain.submit();
 
           }
 
           function init(){
+
+        	  toastInit();
 
               <%
               String msg = request.getAttribute("msg")!=null?request.getAttribute("msg").toString():null;
@@ -137,21 +167,8 @@ if(userinfo!=null){
               %>
 
               var msgText="<%=msg%>";
-              var textVisible="true";
-              var textonly="true";
-              var theme="a";
-              var html="";
 
-              $.mobile.loading( "show", {
-                  text: msgText,
-                  textVisible: textVisible,
-                  theme: theme,
-                  textonly: textonly,
-                  html: html
-              });
-
-
-              var timer = setTimeout(hideMsg, 1000);
+              showMsg(msgText);
 
               <%}%>
 
@@ -159,11 +176,6 @@ if(userinfo!=null){
 
           }
 
-
-
-          function hideMsg(){
-              $.mobile.loading( "hide" );
-          }
 
           function cancel(pk,idx){
 
@@ -412,7 +424,7 @@ if(ADMIN!=null && ADMIN.equals("true")){ %>
 if(ADMIN!=null && ADMIN.equals("true")){ %>
 
 
-           <td><input type="checkbox" id="chk" name="chk" value="<%=i%>" data-role="none"  >        </td>
+           <td><input type="checkbox" id="chk" name="chk" value="<%=i%>" data-role="none" data-pk-value="<%=hash[i].getString("GROUP_KEY")%>" >        </td>
            <td><%=EmsNumberUtil.format(hash[i].getString("CD_ID"), "00")%><%=hash[i].getString("EXT1")%></td>
            <td ><%=hash[i].getString("CREATION_TIMESTAMP")%></td>
 
@@ -437,15 +449,13 @@ if(ADMIN!=null && ADMIN.equals("true")){ %>
 
 
    <%if(hash[i].getString("PRICE_DESC").length()>0){ %>
-    <a href="#POP_PRICE_DESC<%=i%>" data-bs-toggle="modal" data-bs-target="#POP_PRICE_DESC<%=i%>" >
-    <%=hash[i].getString("TOTAL_PAY")%>
-    </a>
+    <a href="#POP_PRICE_DESC<%=i%>" data-bs-toggle="modal" data-bs-target="#POP_PRICE_DESC<%=i%>" ><%=hash[i].getString("TOTAL_PAY")%></a>
     <%}else{ %>
     <%=hash[i].getString("TOTAL_PAY")%>
     <%} %>
 
 
-<!-- Modal -->
+<!-- Modal 관리자 금액상세-->
 
 <div class="modal fade" id="POP_PRICE_DESC<%=i%>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
  <div class="modal-dialog">
@@ -470,42 +480,7 @@ if(ADMIN!=null && ADMIN.equals("true")){ %>
 
            </td>
 
-           <td class="">
-    <%
-
-    if(hash[i].getString("MEMO").length()>0){
-    %>
-
-      <button type="button" class="btn btn-danger btn-sm" style="width: 100%" data-bs-toggle="modal" data-bs-target="#POP_MENO<%=i%>"> <i class="fas fa-undo"></i> 클릭</button>
-
-<!-- Modal -->
-
-<div class="modal fade" id="passwdPOP<%=i%>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
- <div class="modal-dialog">
-   <div class="modal-content">
-     <div class="modal-header">
-       <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-       <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-     </div>
-     <div class="modal-body">
-         <div class="form-group form-group-xs">
-              <div class="col-xs-12"><pre class="pre_con"><%=hash[i].getString("MEMO")%></pre></div>
-          </div>
-     </div>
-     <div class="modal-footer">
-       <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-       <button type="button" class="btn btn-primary btn-sm" onclick="cancel('<%=hash[i].getString("GROUP_KEY")%>','<%=i%>')" ><i class="fas fa-edit"></i>취소</button>
-
-     </div>
-   </div>
- </div>
-</div>
-
-
-    <%}else{%>
-
-    <%}%>
-           </td>
+           <td ><%=hash[i].getString("MEMO")%></td>
 
            <td><%=hash[i].getString("RESERVE_STATE_NAME")%></td>
            <th>
@@ -554,9 +529,6 @@ if(ADMIN!=null && ADMIN.equals("true")){ %>
            %>
            </td>
            <td><%=hash[i].getString("RESERVE_STATE_NAME")%></td>
-           <!--
-           <td></td>
-           -->
 
            <th>
            <% if(hash[i].getString("RESERVE_STATE").equals("") && !fishtype.equals("") ){%>
@@ -568,7 +540,7 @@ if(ADMIN!=null && ADMIN.equals("true")){ %>
 
 
 
-<!-- Modal -->
+<!-- Modal 일반유저 passwdPOP-->
 
 <div class="modal fade" id="passwdPOP<%=i%>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
  <div class="modal-dialog">
@@ -583,7 +555,7 @@ if(ADMIN!=null && ADMIN.equals("true")){ %>
           </div>
      </div>
      <div class="modal-footer">
-       <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+       <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal"><i class="fas fa-edit"></i>Close</button>
        <button type="button" class="btn btn-primary btn-sm" onclick="cancel('<%=hash[i].getString("GROUP_KEY")%>','<%=i%>')" ><i class="fas fa-edit"></i>취소</button>
 
      </div>
@@ -630,6 +602,8 @@ if(ADMIN!=null && ADMIN.equals("true")){ %>
 <div id="ask-icon">
    문의하기
 </div>
+
+<%@ include file="include_toast.jsp" %>
 
   </body>
 </html>
