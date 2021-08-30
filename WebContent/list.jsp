@@ -144,10 +144,6 @@ if(userinfo!=null){
 
         	       }
         	    });
-
-        	    return false;
-
-
         	  }
 
 
@@ -249,6 +245,8 @@ border:1px solid blue;
 max-width: 140px;
 width: 100%;
 }
+
+
 
 /*
 ##Device = Most of the Smartphones Mobiles (Portrait)
@@ -389,7 +387,7 @@ if(ADMIN!=null && ADMIN.equals("true")){ %>
            <!-- <th data-priority="<%=idx++ %>">차량</th> -->
            <th data-priority="<%=idx++ %>">기간</th>
            <th data-priority="<%=idx++ %>">금액</th>
-           <th data-priority="<%=idx++ %>">메모</th>
+           <th data-priority="<%=idx++ %>" width="20%">메모</th>
            <th data-priority="<%=idx++ %>">상태</th>
            <th data-priority="<%=idx++ %>" width="20%">버튼</th>
 <%}else{ %>
@@ -470,7 +468,7 @@ if(ADMIN!=null && ADMIN.equals("true")){ %>
           </div>
      </div>
      <div class="modal-footer">
-       <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+       <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
 
      </div>
    </div>
@@ -480,7 +478,7 @@ if(ADMIN!=null && ADMIN.equals("true")){ %>
 
            </td>
 
-           <td ><%=hash[i].getString("MEMO")%></td>
+           <td  data-toggle="tooltip" data-placement="top" title="<%=hash[i].getString("MEMO")%>"><%=hash[i].getString("MEMO")%></td>
 
            <td><%=hash[i].getString("RESERVE_STATE_NAME")%></td>
            <th>
@@ -546,7 +544,7 @@ if(ADMIN!=null && ADMIN.equals("true")){ %>
  <div class="modal-dialog">
    <div class="modal-content">
      <div class="modal-header">
-       <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+       <h5 class="modal-title" id="exampleModalLabel">예약취소</h5>
        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
      </div>
      <div class="modal-body">
@@ -555,8 +553,8 @@ if(ADMIN!=null && ADMIN.equals("true")){ %>
           </div>
      </div>
      <div class="modal-footer">
-       <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal"><i class="fas fa-edit"></i>Close</button>
-       <button type="button" class="btn btn-primary btn-sm" onclick="cancel('<%=hash[i].getString("GROUP_KEY")%>','<%=i%>')" ><i class="fas fa-edit"></i>취소</button>
+       <button type="button" class="btn  btn-primary btn-sm" data-bs-dismiss="modal"><i class="fas fa-edit"></i>닫기</button>
+       <button type="button" class="btn btn-danger btn-sm" onclick="cancel('<%=hash[i].getString("GROUP_KEY")%>','<%=i%>')" ><i class="fas fa-edit"></i>취소</button>
 
      </div>
    </div>
