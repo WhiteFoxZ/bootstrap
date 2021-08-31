@@ -11,7 +11,7 @@
 
 
 <%
-session.invalidate();
+	session.invalidate();
 %>
 
 
@@ -20,56 +20,46 @@ session.invalidate();
 <html>
 <head>
 
-<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no" />
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no" />
 
-<link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css" />
+<link rel="stylesheet"
+	href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css" />
 <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
-<script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
-<script src="./js/valid.js"></script>
+<script
+	src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
 
 
 
 <style>
-* { -webkit-text-size-adjust:none; max-width:100%; }
-
-
+* {
+	-webkit-text-size-adjust: none;
+	max-width: 100%;
+}
 </style>
-
 
 <title>LogOut</title>
 
-
-
-
-
 </head>
 
-
-<body  >
-
-
-<section id="page1" data-role="page">
-
-<div class="content" data-role="content" align="center" >
-
-<div class="ui-body ui-body-a">
-<h4>
-
-방문해 주셔서  감사합니다.
+<body onload="noBack();" onpageshow="if(event.persisted) noBack();" onunload="">
 
 
+	<section id="page1" data-role="page">
 
-</h4>
+		<div class="content" data-role="content" align="center">
 
-</div>
+			<div class="ui-body ui-body-a">
+				<h4>방문해 주셔서 감사합니다.</h4>
 
-</div>
-
-</section>
-
-</body>
+			</div>
 
 
+		</div>
+
+	</section>
+
+</body >
 
 </html>
 

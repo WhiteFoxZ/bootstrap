@@ -280,11 +280,11 @@ function year_onchange()
    </head>
    <body class="sb-nav-fixed" onload ="window_onload()" >
 
-	<%@ include file="include_sb-topnav.jsp" %>
+	<%@ include file="include_sb-topnav.html" %>
 
        <div id="layoutSidenav">
 
-           <%@ include file="include_layoutSidenav_nav.jsp" %>
+           <%@ include file="include_layoutSidenav_nav.html" %>
 
            <div id="layoutSidenav_content">
                <main>

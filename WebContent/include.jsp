@@ -12,7 +12,7 @@
 
 
 
-<%	
+<%
 //모바일인지 체크
 String ua=request.getHeader("User-Agent").toLowerCase();
 
@@ -24,6 +24,14 @@ EmsHashtable userinfo = session.getAttribute("userinfo")!=null?	(EmsHashtable) s
 String ADMIN = session.getAttribute("ADMIN")!=null?	(String) session.getAttribute("ADMIN")	:"false";
 
 
-	
-%>	
+
+%>
+
+<script >
+//뒤로가기 막기
+window.history.forward();
+function noBack(){ window.history.forward(); }
+
+</script>
+
 
