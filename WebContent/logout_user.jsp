@@ -29,8 +29,6 @@
 <script
 	src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
 
-
-
 <style>
 * {
 	-webkit-text-size-adjust: none;
@@ -40,6 +38,15 @@
 
 <title>LogOut</title>
 
+<script type="text/javascript">
+
+setTimeout(goLogin, 2000);
+
+function goLogin(){
+	document.location.href='<%=request.getContextPath()%>/login.jsp';
+}
+
+</script>
 </head>
 
 <body onload="noBack();" onpageshow="if(event.persisted) noBack();" onunload="">

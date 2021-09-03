@@ -597,9 +597,6 @@ if(ADMIN!=null && ADMIN.equals("true")){ %>
           </div>
       </div>
 
-<div id="ask-icon">
-   문의하기
-</div>
 
 <%@ include file="include_toast.jsp" %>
 

@@ -15,5 +15,5 @@ session.invalidate();
 %>
 
 <script>
-document.location.href='login_admin.jsp';
+document.location.href='login.jsp';
 </script>
