@@ -184,7 +184,7 @@ if(superuser!=null && superuser.indexOf(referrer)>=0){
                                                 <a class="small" href="password.jsp">비번찾기?</a>
 
                                                  <button type="button" class="btn btn-success "  onclick="sendData();"><i class="bi bi-cloud-arrow-up" role="img" ></i> 로그인</button>
-                                                 <button type="button" class="btn btn-warning "  onclick="sendLogin();"><i class="bi bi-cloud-arrow-up" role="img" ></i> 신규가입</button>
+                                                 <button type="button" class="btn btn-warning "  onclick="sendLogin();"><i class="bi bi-cloud-arrow-up" role="img" ></i>회원가입</button>
 
 
                                             </div>
@@ -200,18 +200,7 @@ if(superuser!=null && superuser.indexOf(referrer)>=0){
                 </main>
             </div>
             <div id="layoutAuthentication_footer">
-                <footer class="py-4 bg-light mt-auto">
-                    <div class="container-fluid px-4">
-                        <div class="d-flex align-items-center justify-content-between small">
-                            <div class="text-muted">Copyright &copy; Your Website 2021</div>
-                            <div>
-                                <a href="#">Privacy Policy</a>
-                                &middot;
-                                <a href="#">Terms &amp; Conditions</a>
-                            </div>
-                        </div>
-                    </div>
-                </footer>
+              <%@ include file="include_footer.jsp" %>
             </div>
         </div>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>

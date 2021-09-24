@@ -11,6 +11,8 @@
 if(userinfo!=null){
 
 
+	String USERNAME = userinfo.getString("USERNAME");
+
    String event = request.getParameter("event");
    if (event == null) {
        event = "find";
@@ -286,11 +288,11 @@ flex: 1 1 auto;
   </head>
   <body class="sb-nav-fixed" onload ="init()" >
 
-  <%@ include file="include_sb-topnav.html" %>
+  <%@ include file="include_sb-topnav.jsp" %>
 
       <div id="layoutSidenav">
 
-          <%@ include file="include_layoutSidenav_nav.html" %>
+          <%@ include file="include_layoutSidenav_nav.jsp" %>
 
           <div id="layoutSidenav_content">
               <main>

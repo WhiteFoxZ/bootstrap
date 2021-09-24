@@ -241,7 +241,6 @@ border:1px solid blue;
 
 
 
-
 /*
 ##Device = Most of the Smartphones Mobiles (Portrait)
 ##Screen = B/w 320px to 479px
@@ -285,6 +284,8 @@ max-height: 25px;
 
 
 
+
+
 </style>
   </head>
 
@@ -314,10 +315,8 @@ max-height: 25px;
                           <div class="card-header">
 
 
-<%if(ADMIN!=null && ADMIN.equals("true")){ %>
 
-
-<div class="row">
+ <div class="row">
 
    <div class="col-sm-6">
    <label for="P_SDATE">예약일</label>
@@ -342,26 +341,6 @@ max-height: 25px;
 
  </div><!-- row end -->
 
-
-<%}else{//어드민이 아닐경우 %>
-
-     <div class="row">
-        <div class="col-md-6"><i class="fas fa-table me-1"></i><%=rdate %>&nbsp;<b style="color: red;">[<%=fishtype %>]</b>
-        </div>
-        <div class="col-md-6">
-        ★자리위치사진 :
-
- <%for(int i=0; i<postion.length; i++){ %>
-
-<a href="<%=postion[i].getString("CD_MEANING") %>" target="_blank" /><%=postion[i].getString("EXT1")%></a>&nbsp;
-<%=i<postion.length-1?"|&nbsp;":""%>
-
-
- <%} %>
-        </div>
-    </div>
-
-<%} %>
 
 
                           </div>

@@ -6,42 +6,28 @@
 
 <%
 
-
-String USERNAME =null;
-String LOGINID=null;
+String USERNAME="";
 
 if(userinfo!=null){
 
-   USERNAME = userinfo.getString("USERNAME");
-   LOGINID = userinfo.getString("LOGINID");
+	USERNAME = userinfo.getString("USERNAME");
 
-  String event = request.getParameter("event");
-  if (event == null) {
-      event = "find";
-  }
+	  String event = request.getParameter("event");
+	  if (event == null) {
+	      event = "find";
+	  }
 
-	String  yyyyMM =  EmsDateUtil.getCurrentDate("yyyyMM");
 
-  String P_CD_MEANING = request.getParameter("P_CD_MEANING")==null?yyyyMM:request.getParameter("P_CD_MEANING");
+	  String P_CD_MEANING = request.getParameter("P_CD_MEANING")==null?"":request.getParameter("P_CD_MEANING");
 
 
 
-  int sessionHashCode = session.getId().hashCode();
+	  int sessionHashCode = session.getId().hashCode();
 
-  FishType book = new FishType(application,request, userinfo, sessionHashCode);
-
-
-  EmsHashtable[] hash  = (EmsHashtable[])request.getAttribute("hash");
+	  DayMoney book = new DayMoney(application,request, userinfo, sessionHashCode);
 
 
-  DataSource ds = (DataSource)application.getAttribute("jdbc/mysql_ds");
-
-  DBManager dbm = new DBManager(ds);
-
-  //어종명 lov 가져오기
-  EmsHashtable[] hash2 =
-  dbm.selectMultipleRecord("SELECT CD_MEANING FROM comm_info where LOGIN_ID=? and CD_GROUP_ID='DAY_MONEY' and PRICE>0 ORDER BY SORT_SEQ",
-    		new String[] {LOGINID });
+	  EmsHashtable[] hash  = (EmsHashtable[])request.getAttribute("hash");
 
 
 
@@ -58,7 +44,6 @@ if(userinfo!=null){
       <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
       <meta name="description" content="" />
       <meta name="author" content="" />
-      <title>Dashboard - SB Admin</title>
 
           <link href="css/styles.css" rel="stylesheet" />
         <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" crossorigin="anonymous"></script>
@@ -118,75 +103,6 @@ if(userinfo!=null){
       	});
 
 
-
-
-      	$("[id^='lovFishType_']").on('change', function() {
-
-              var text = this.value;
-
-          	var rownum = $( this ).data( "rownum" );
-
-          	var extName = "#EXT1_"+rownum;
-
-          	//alert(extName +' : '+text);
-
-      		$(extName).val(text);
-
-          });
-
-
-      	$("#lovPersonAll").on('change', function() {
-
-              var text = this.value;
-
-              $("[id^='chk']").each (function (index, el) {
-
-              	if($(this).prop("checked")){
-
-              		var extName = "#EXT2_"+index;
-
-              		$(extName).val(text);
-
-              	}
-              });
-
-
-
-      	});	//lovFishTypeAll
-
-
-      	$("#lovFishTypeAll").on('change', function() {
-
-              var text = this.value;
-
-
-              $("[id^='chk']").each (function (index, el) {
-
-              	if($(this).prop("checked")){
-
-              		var extName = "#EXT1_"+index;
-
-              		$(extName).val(text);
-
-              	}
-              });
-
-
-      	});	//lovFishTypeAll
-
-
-      	//조회 년월일 lov
-      	$("#lovDay").on('change', function() {
-
-              var text = this.value;
-
-          	var extName = "#P_CD_MEANING";
-
-      		$(extName).val(text);
-      	}); //lovDay end
-
-
-
       }	//init
 
 
@@ -220,7 +136,6 @@ flex: 1 1 auto;
 input[type=text]
 {
 width: 100%;
-max-width:70px;
 display: inline;
 }
 
@@ -235,6 +150,11 @@ table {
   }
 
 
+
+ .msearch input {
+	max-width: 100px;
+	max-height: 25px;
+}
 
 
 /*
@@ -259,10 +179,10 @@ table {
   }
 
 
-
-
-
 }
+
+
+
 
 
 </style>
@@ -293,34 +213,15 @@ table {
 	                <div class="card-header">
 <div class="row">
 
-   <div class="col-8" style="padding-left: 0px;    padding-right: 0px;">년월 :
-		<input type="text" id="P_CD_MEANING" name="P_CD_MEANING" value="<%=P_CD_MEANING%>"  style="max-height: 25px;">
-
-			<select ID="lovDay"   style="min-width: 90px; min-height: 25px;"   >
-
-			<option value="">선택</option>
-
-			<%
-			  String nowway = EmsDateUtil.getCurrentDate("yyyyMM01");
-
-			  String date;
-			  for(int i=-1; i<=6; i++){
-				  date = EmsDateUtil.addMonths(nowway, i, "yyyyMMdd");
-%>
-				<option value="<%=EmsDateUtil.getCurrentDate("yyyyMM", date)%>">
-				<%=EmsDateUtil.getCurrentDate("yy.MM", date) %></option>
-<%
-			  }
-%>
-
-			</select>
-
+   <div class="col" >
+   <label for="P_CD_MEANING">어종</label>
+		<input type="text" id="P_CD_MEANING" name="P_CD_MEANING" value="<%=P_CD_MEANING%>"  >
    </div>
 
 
-   <div class="col-4" style="padding-left: 0px;    padding-right: 0px;" >
-     <button type="button" class="btn btn-danger btn-sm" style="margin-top: 1px;" onclick="setEvent('find');"> <i class="fas fa-undo"></i> 조회</button>
-     <button type="button" class="btn btn-danger btn-sm" style="margin-top: 1px;" onclick="setEvent('modify');"> <i class="fas fa-undo"></i> 수정</button>
+   <div class="col"  >
+     <button type="button" class="btn btn-danger btn-sm"  onclick="setEvent('find');"> <i class="fas fa-undo"></i> 조회</button>
+     <button type="button" class="btn btn-danger btn-sm"  onclick="setEvent('modify');"> <i class="fas fa-undo"></i> 수정</button>
    </div>
 
  </div><!-- row end -->
@@ -357,43 +258,14 @@ table {
 
 
                         <table >
+                        			<% int idx=1; 	%>
                                     <thead>
                                         <tr >
-							<%
-							int idx=1;
-							%>
 							           <th data-priority="<%=idx++ %>" width="5%"><input type="checkbox" id="allCheck"  /></th>
-							           <th data-priority="<%=idx++ %>" width="10%">날짜</th>
-							           <th data-priority="<%=idx++ %>" width="*">
-										<select ID="lovFishTypeAll" style="width: 90%; max-width: 170px;" >
-
-										<option value="">어종</option>
-
-										<%=EmsOption.getOption(hash2,"CD_MEANING","CD_MEANING","") %>
-
-										</select>
-										</th>
-							           <th data-priority="<%=idx++ %>" width="10%">
-
-							<%
-							String key    ="0|1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20";
-							String value ="0|1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20";
-							%>
-
-										<select ID="lovPersonAll"   style="min-height: 25px; min-width: 55px;" >
-										<option value="">승선</option>
-										<%=EmsOption.getOption(key,value,"") %>
-										</select>
-
-									</th>
-
-
+							           <th data-priority="<%=idx++ %>" width="50%">어종</th>
+							           <th data-priority="<%=idx++ %>" width="*">가격</th>
 							       </tr>
                                     </thead>
-
-
-
-
                                     <tbody>
                                         <%
 										if(hash!=null)
@@ -404,17 +276,8 @@ table {
 
 									           <th ><input type="checkbox" id="chk" name="chk" value="<%=i%>"  >
 									                  <input type="HIDDEN" name="PK_CD_ID" value="<%=hash[i].getString("CD_ID")%>"  ></th>
-									           <td ><%=hash[i].getString("FISH_DAY")%></td>
-									           <td >
-									           			<input type="text" id="EXT1_<%=i %>" name="EXT1"   value="<%=hash[i].getString("EXT1")%>"  >
-														<select ID="lovFishType_<%=i %>" data-rownum="<%=i %>"   >
-														<option value="">선택하세요</option>
-														<%=EmsOption.getOption(hash2,"CD_MEANING","CD_MEANING","") %>
-														<option value="선박수리">선박수리</option>
-														</select>
-												</td>
-
-									           <td ><input type="text" id="EXT2_<%=i %>" name="EXT2" value="<%=hash[i].getString("EXT2")%>" style="text-align: right; width: 55px;" ></td>
+									           <td ><input type="text"  name="CD_MEANING" value="<%=hash[i].getString("CD_MEANING")%>"  ></td>
+									           <td ><input type="text"  name="PRICE" 		   value="<%=hash[i].getString("PRICE")%>"  ></td>
 
 											</tr>
 									<%}%>

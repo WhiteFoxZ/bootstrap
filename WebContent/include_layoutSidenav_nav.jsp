@@ -1,4 +1,11 @@
-<%@ page   pageEncoding="UTF-8"%>
+<%@ page language="java" pageEncoding="UTF-8"%>
+
+<%
+
+String ADMIN_chk = session.getAttribute("ADMIN")!=null?	(String) session.getAttribute("ADMIN")	:"false";
+
+%>
+
 <!--  layoutSidenav_nav -->
         <div id="layoutSidenav_nav">
               <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
@@ -17,7 +24,7 @@
                               달력
                           </a>
 
-<% if(!ADMIN.equals("true")){ %>
+<% if(!ADMIN_chk.equals("true")){ %>
 
                            <a class="nav-link" href="#">
                               <span class="sb-nav-link-icon"><i class="fas fa-book-open"></i></span>
@@ -48,7 +55,7 @@
                           </a>
 
 
-                           <a class="nav-link" href="index.html">
+                           <a class="nav-link" href="common.jsp">
                               <span class="sb-nav-link-icon"><i class="fas fa-cog"></i></span>
                               환경설정
                           </a>
@@ -59,7 +66,7 @@
                       </div>
                   </div>
                   <div class="sb-sidenav-footer">
-                      <div class="small "> <%=ADMIN.equals("true")?"관리자":"" %></div>
+                      <div class="small "> <%=ADMIN_chk.equals("true")?"관리자":"" %></div>
                   </div>
               </nav>
           </div>
