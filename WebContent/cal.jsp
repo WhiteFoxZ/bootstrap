@@ -124,7 +124,6 @@
 
 <style>
 
-//청소년체
 @font-face{
 font-family:'Youth';
 font-style:normal;
@@ -133,16 +132,7 @@ src:url('//cdn.jsdelivr.net/korean-webfonts/1/orgs/othrs/kywa/Youth/Youth.woff2'
     url('//cdn.jsdelivr.net/korean-webfonts/1/orgs/othrs/kywa/Youth/Youth.woff') format('woff');
 }
 
-//네이버나눔체
-@font-face{
-font-family:'nanum';
-font-style:normal;
-font-weight:400;
-src:url('./font/NanumFont_EOT_ALL/NanumGothic.eot') format('nanum');
-}
-
-
-body {font-family:'Youth'; }
+body {font-family:'Youth';}
 
 .card-body {
  flex: 1 1 auto;
@@ -186,7 +176,7 @@ div.body2 {clear:left; float:left; width:100px; height:100px; font-size: 18px; d
 //CSS
 
 div.Box {position:relative; width:100%; height:100%;;}
-div.head {float:left; width:100%; height:30%; font-size: 10px;color: red; margin-top: 0px;}
+div.head {float:left; width:100%; height:30%; font-size: 11px;color: red; margin-top: 0px; font-weight: bold;}
 div.body {clear:left; float:left; width:100%; height:45%; font-size: 20px;  }
 div.foot {position:absolute; clear:left; float:left; width:100%; height:25%; ; bottom:0px; font-size: 10px;color: black;}
 

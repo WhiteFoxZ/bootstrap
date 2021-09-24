@@ -141,16 +141,6 @@ flex: 1 1 auto;
 }
 
 
-
-
-.input-sm {
-   height: 25px;
-   padding: 1px 10px;
-   font-size: 12px;
-   line-height: 1.5;
-   border-radius: 3px;
-}
-
 .form-control {
 font-size: 0.7em;
 margin-top: 1px;
@@ -214,10 +204,12 @@ max-height: 25px;
  }
 
  .msearch  button {
- min-width: 150px;
- margin-top: 3px;
+ min-width: 70px;
 }
 
+.btn {
+text-align: right;
+}
 
 </style>
   </head>
@@ -266,9 +258,8 @@ max-height: 25px;
 
 
 
-      <div class="col-sm">
-
-<button type="button" class="btn btn-danger btn-sm" onclick="setEvent('find');"> <i class="fas fa-undo"></i> 조회</button>
+      <div class="col-sm btn">
+	 <button type="button" class="btn btn-danger btn-sm" onclick="setEvent('find');"> <i class="fas fa-undo"></i> 조회</button>
      <button type="button" class="btn btn-danger btn-sm" onclick="setEvent('modify');"> <i class="fas fa-undo"></i> 수정</button>
 
    </div>

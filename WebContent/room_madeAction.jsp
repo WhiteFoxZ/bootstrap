@@ -20,7 +20,7 @@ if(userinfo!=null){
 
     String rdate=request.getParameter("rdate")!=null?request.getParameter("rdate").toString():"";
 
-    String link_url = mobile?"list.jsp":"list.jsp";
+    String link_url = "list.jsp";
 
 %>
 <!-- html 시작 -->
@@ -28,25 +28,37 @@ if(userinfo!=null){
 <html>
 <head>
 
-<meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta charset="utf-8" />
+      <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+      <meta name="description" content="" />
+      <meta name="author" content="" />
 
-<link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css" />
-<script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
-<script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+		<link href="css/styles.css" rel="stylesheet" />
+
+       <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+       <script src="js/scripts.js"></script>
+      <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+
+
 
 <title>예약등록 처리중...</title>
 
         <SCRIPT language=javascript>
 
 
-            function setEvent(event){
-
-                document.frmMain.event.value=event;
-                document.frmMain.submit();
-
-            }
-
             function init(){
+
+
+            	var option= {
+                        animation: true,
+                        autohide: true,
+                        delay: 1500
+                      }
+
+                  toastMsg = new bootstrap.Toast($("#toastMsg"), option);
+
+
 
             	<%
             	String msg = request.getAttribute("msg")!=null?request.getAttribute("msg").toString():null;
@@ -54,33 +66,29 @@ if(userinfo!=null){
             	if(msg!=null && msg.length()>0){
             	%>
 
-            	var msgText="<%=msg%>";
-            	var textVisible="true";
-            	var textonly="true";
-            	var theme="a";
-            	var html="";
+            		var msgText="<%=msg%>";
 
-            	$.mobile.loading( "show", {
-            		text: msgText,
-            		textVisible: textVisible,
-            		theme: theme,
-            		textonly: textonly,
-            		html: html
-            	});
-
-
-            	var timer = setTimeout(hideMsg, 2000);
+              		showMsg(msgText);
 
             	<%}%>
+
+
+
+                $('#toastMsg').on('hidden.bs.toast', function () {
+
+                	location.href="<%=link_url%>?rdate=<%=rdate%>";
+
+                	})
+
+
+
             }
 
 
-            function hideMsg(){
-            	$.mobile.loading( "hide" );
 
-            	location.href="<%=link_url%>?rdate=<%=rdate%>";
 
-            }
+
+
 
         </script>
 
@@ -89,6 +97,9 @@ if(userinfo!=null){
 
 
 <body onload=init() >
+
+
+<%@ include file="include_toast.jsp" %>
 
 </body>
 

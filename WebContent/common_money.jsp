@@ -277,7 +277,7 @@ table {
 									           <th ><input type="checkbox" id="chk" name="chk" value="<%=i%>"  >
 									                  <input type="HIDDEN" name="PK_CD_ID" value="<%=hash[i].getString("CD_ID")%>"  ></th>
 									           <td ><input type="text"  name="CD_MEANING" value="<%=hash[i].getString("CD_MEANING")%>"  ></td>
-									           <td ><input type="text"  name="PRICE" 		   value="<%=hash[i].getString("PRICE")%>"  ></td>
+									           <td ><input type="text"  name="PRICE" 		   value="<%=hash[i].getString("PRICE")%>"  style="text-align: right;" ></td>
 
 											</tr>
 									<%}%>
