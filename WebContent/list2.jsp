@@ -98,13 +98,13 @@ if(userinfo!=null){
 <!DOCTYPE html>
 <html lang="en">
   <head>
-  <title><%=USERNAME %>예약리스트</title>
+
       <meta charset="utf-8" />
       <meta http-equiv="X-UA-Compatible" content="IE=edge" />
       <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
       <meta name="description" content="" />
       <meta name="author" content="" />
-      <title>Dashboard - SB Admin</title>
+      <title>미입금대상</title>
 
           <link href="css/styles.css" rel="stylesheet" />
         <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" crossorigin="anonymous"></script>
@@ -123,7 +123,10 @@ if(userinfo!=null){
 
           function setEvent(event){
 
-        	  if(event="delete"){
+
+
+
+        	  if(event=="delete"){
 
         		  //$('input:checkbox[id="chk"]').attr("checked", true);	테스트
 
@@ -318,21 +321,9 @@ max-height: 25px;
 
  <div class="row">
 
-   <div class="col-sm-6">
-   <label for="P_SDATE">예약일</label>
-   <input type="date" id="P_SDATE" name="P_SDATE" value="<%=P_SDATE %>"       onchange="commonWork()" >
- ~ <input type="date" id="P_EDATE" name="P_EDATE" value="<%=P_EDATE %>"      onchange="commonWork()" >
 
 
-   </div>
-
-
-   <div class="col-sm-2"  >
-   	<input type="text" id="P_NAME" name="P_NAME" value="<%=P_NAME %>"   placeholder="이름" />
-
-   </div>
-
-      <div class="col-sm-4"  >
+      <div class="col"  >
 
      <button type="button" class="btn btn-danger btn-sm" onclick="setEvent('find');"> <i class="fas fa-undo"></i> 조회</button>
      <button type="button" class="btn btn-danger btn-sm" onclick="setEvent('modify');"> <i class="fas fa-undo"></i> 입금</button>

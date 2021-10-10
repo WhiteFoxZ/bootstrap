@@ -145,7 +145,7 @@ public class LIST {
 			request.setAttribute("hash", hash);
 
 		} catch (Exception e) {
-			e.printStackTrace();
+			log.error(e.getMessage());
 		}finally{
 
 		}
@@ -171,7 +171,7 @@ public class LIST {
 			request.setAttribute("hash", hash);
 
 		} catch (Exception e) {
-			e.printStackTrace();
+			log.error(e.getMessage());
 		}finally{
 
 		}
@@ -223,7 +223,7 @@ public class LIST {
 			dbm.commitChange(con);
 
 		} catch (Exception e) {
-			e.printStackTrace();
+			log.error(e.getMessage());
 			dbm.rollbackChange(con);
 
 			msg="에러가 발생했습니다.관리자에게 문의";
@@ -263,7 +263,7 @@ public class LIST {
 
 				idx = Integer.parseInt(chk[i]);
 
-				log.info(idx);
+				log.debug("cancel : "+idx);
 
 				dbm.insert(con , QueryXMLParser.getQuery(this.getClass(), "list.xml", "update_sql")
 						,new String[] { RESERVE_STATE, PK_GROUP_KEY[idx], LOGINID });
@@ -277,7 +277,7 @@ public class LIST {
 			dbm.commitChange(con);
 
 		} catch (Exception e) {
-			e.printStackTrace();
+			log.error(e.getMessage());
 			dbm.rollbackChange(con);
 
 			msg="에러가 발생했습니다.관리자에게 문의";
@@ -318,11 +318,12 @@ public class LIST {
 
 			} catch (GeneralSecurityException e) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
+				log.error(e.getMessage());
 			}
 		} catch (UnsupportedEncodingException e1) {
 			// TODO Auto-generated catch block
-			e1.printStackTrace();
+
+			log.error(e1.getMessage());
 		}
 
 
@@ -361,28 +362,25 @@ public class LIST {
 			int i = dbm.delete(con , QueryXMLParser.getQuery(this.getClass(), "list.xml", "delete_tel_sql")
 					,new String[] {pk_key,pk_pw, LOGINID });
 
-			if (i>0 )
+			log.debug("삭제 cnt "+i);
+
+			if (i>0 ) {
 				msg="삭제 되었습니다.";
-			else
+				new GMailSender().mailSender("예약시스템.취소",title.toString(), EMAIL, contents.toString());
+			}else {
 				msg="비밀 번호가 다릅니다.";
+			}
 
 			request.setAttribute("msg", msg);
-
-			new GMailSender().mailSender("예약시스템.취소",title.toString(), EMAIL, contents.toString());
-
 
 			dbm.commitChange(con);
 
-
-
 		} catch (Exception e) {
-			e.printStackTrace();
+			log.error(e.getMessage());
 			dbm.rollbackChange(con);
 			msg="에러가 발생했습니다.관리자에게 문의";
 		}finally{
-
 			request.setAttribute("msg", msg);
-
 		}
 
 
@@ -416,15 +414,12 @@ public class LIST {
 						,new String[] {PK_GROUP_KEY[idx], LOGINID });
 
 				msg="삭제 되었습니다.";
-
-				request.setAttribute("msg", msg);
-
 			}
 
 			dbm.commitChange(con);
 
 		} catch (Exception e) {
-			e.printStackTrace();
+			log.error(e.getMessage());
 			dbm.rollbackChange(con);
 			msg="에러가 발생했습니다.관리자에게 문의";
 		}finally{

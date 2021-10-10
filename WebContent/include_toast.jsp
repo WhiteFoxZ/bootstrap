@@ -9,7 +9,7 @@
        var option= {
                animation: true,
                autohide: true,
-               delay: 1000
+               delay: 2000
              }
 
          toastMsg = new bootstrap.Toast($("#toastMsg"), option);

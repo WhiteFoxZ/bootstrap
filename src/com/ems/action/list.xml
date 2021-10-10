@@ -3,7 +3,9 @@
 
 	 <list_sql id="list_sql" desc="예약정보조회" >
 		 <![CDATA[
-SELECT A.CD_ID ,A.CD_MEANING, A.EXT1
+
+SELECT /*+ list_sql 예약정보조회 */
+A.CD_ID ,A.CD_MEANING, A.EXT1
 , B.RESERVE_INFO_ID
 , B.USER_NAME
 , B.USER_TEL1
@@ -30,7 +32,7 @@ WHERE A.CD_GROUP_ID='ROOM_NUM' AND A.LOGIN_ID=?
 
 	 <list_sql2 id="list_sql2" desc="미입금된 예약정보조회" >
 		 <![CDATA[
-SELECT
+SELECT /*+ list_sql2 미입금된 예약정보조회 */
   A.CD_ID ,A.CD_MEANING, A.EXT1
 , B.RESERVE_INFO_ID
 , B.USER_NAME
@@ -48,16 +50,16 @@ SELECT
 , B.GROUP_KEY
 , FORMAT(B.TOTAL_PAY, 0) as TOTAL_PAY
 , B.PRICE_DESC
-
+, B.DIFF
  FROM
  ( select CD_ID, CD_MEANING,EXT1 from comm_info where CD_GROUP_ID='ROOM_NUM' AND LOGIN_ID=? ) A
  INNER JOIN
- ( SELECT * FROM reserve_info FORCE INDEX (idx_reserve_info_RESERVE_DATE)
+ ( SELECT DATEDIFF( now(), CREATION_TIMESTAMP) DIFF, A.* FROM reserve_info A FORCE INDEX (idx_reserve_info_RESERVE_DATE)
     WHERE 1=1
  AND RESERVE_DATE between DATE_ADD(NOW(), INTERVAL -10 DAY) and DATE_ADD(NOW(), INTERVAL 10 DAY)
  AND LOGIN_ID=?
  AND RESERVE_STATE='1'
- and DATEDIFF( now(), CREATION_TIMESTAMP) between 2 and 3
+ and DATEDIFF( now(), CREATION_TIMESTAMP) between 1 and 3
  ) B
  ON A.CD_ID =B.ROOM_NUM
 		 ]]>

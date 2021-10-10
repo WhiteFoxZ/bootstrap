@@ -13,12 +13,12 @@ String ADMIN_chk = session.getAttribute("ADMIN")!=null?	(String) session.getAttr
                       <div class="nav">
 
                           <div class="sb-sidenav-menu-heading"></div>
-
+<!--
                            <a class="nav-link" href="#">
                               <span class="sb-nav-link-icon"><i class="fas fa-bullhorn"></i></span>
                               공지사항
                           </a>
-
+ -->
                           <a class="nav-link" href="cal.jsp">
                               <span class="sb-nav-link-icon"><i class="fas fa-calendar"></i></span>
                               달력
@@ -26,10 +26,6 @@ String ADMIN_chk = session.getAttribute("ADMIN")!=null?	(String) session.getAttr
 
 <% if(!ADMIN_chk.equals("true")){ %>
 
-                           <a class="nav-link" href="#">
-                              <span class="sb-nav-link-icon"><i class="fas fa-book-open"></i></span>
-                              예약확인(취소)
-                          </a>
 
 <%}else{ %>
 

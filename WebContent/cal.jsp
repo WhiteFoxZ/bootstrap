@@ -114,7 +114,7 @@
        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
        <meta name="description" content="" />
        <meta name="author" content="" />
-       <title>Dashboard - SB Admin</title>
+       <title>달력</title>
        <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
        <link href="css/styles.css" rel="stylesheet" />
        <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" crossorigin="anonymous"></script>
@@ -142,8 +142,8 @@ tbody.tr, td {  height:90px; align:center; text-align: center; font-family:'nanu
 
 
 div.Box {position:relative; width:100%; height:100%;}
-div.head {float:left; width:100%; height:35%; font-size: 15px;color: red; margin-top: 0px;}
-div.body {clear:left; float:left; width:100%; height:40%; font-size: 15px;  }
+div.head {float:left; width:100%; height:35%; font-size: 15px;color: red; margin-top: 0px;font-weight: bold;}
+div.body {clear:left; float:left; width:100%; height:40%; font-size: 20px;  }
 div.foot {position:absolute; clear:left; float:left; width:100%; height:25%; ; bottom:0px; font-size: 15px;color: black;}
 
 div.body2 {clear:left; float:left; width:100px; height:100px; font-size: 18px; display: flex; align-items: center; }

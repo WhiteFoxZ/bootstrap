@@ -5486,7 +5486,7 @@ textarea.form-control-lg {
 
 .modal {
   position: fixed;
-  top: 0;
+  top: 50;
   left: 0;
   z-index: 1055;
   display: none;
@@ -5553,7 +5553,8 @@ textarea.form-control-lg {
   position: fixed;
   top: 0;
   left: 0;
-  z-index: 1050;
+
+  z-index: 1025;
   width: 100vw;
   height: 100vh;
   background-color: #000;
